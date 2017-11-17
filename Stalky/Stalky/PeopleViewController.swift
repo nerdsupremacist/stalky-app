@@ -13,12 +13,12 @@ import Vision
 class PeopleViewController: UIViewController {
     
     var session: AVCaptureSession?
+    var shapeView = UIView()
     let shapeLayer = CAShapeLayer()
     
     lazy var detectionManager: PeopleDetectionManager = {
         return PeopleDetectionManager(delegate: self)
     }()
-    
     
     lazy var previewLayer: AVCaptureVideoPreviewLayer? = {
         guard let session = self.session else { return nil }
@@ -29,8 +29,9 @@ class PeopleViewController: UIViewController {
         return previewLayer
     }()
     
-    var frontCamera: AVCaptureDevice? = {
-        return AVCaptureDevice.default(AVCaptureDevice.DeviceType.builtInWideAngleCamera, for: AVMediaType.video, position: .front)
+    var device: AVCaptureDevice? = {
+        return .default(AVCaptureDevice.DeviceType.builtInWideAngleCamera,
+                        for: AVMediaType.video, position: .back)
     }()
     
 }
@@ -65,6 +66,11 @@ extension PeopleViewController {
         shapeLayer.setAffineTransform(CGAffineTransform(scaleX: -1, y: -1))
         
         view.layer.addSublayer(shapeLayer)
+        
+        shapeView.backgroundColor = .white
+        shapeView.frame = .zero
+        
+        view.addSubview(shapeView)
     }
     
 }
@@ -74,7 +80,7 @@ extension PeopleViewController {
     
     func sessionPrepare() {
         session = AVCaptureSession()
-        guard let session = session, let captureDevice = frontCamera else { return }
+        guard let session = session, let captureDevice = device else { return }
         
         do {
             let deviceInput = try AVCaptureDeviceInput(device: captureDevice)
@@ -112,7 +118,6 @@ extension PeopleViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
                        didOutput sampleBuffer: CMSampleBuffer,
                        from connection: AVCaptureConnection) {
         
-        
         let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
         
         let attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault, sampleBuffer, kCMAttachmentMode_ShouldPropagate)
@@ -130,6 +135,28 @@ extension PeopleViewController: PeopleDetectionManagerDelegate {
     
     func manager(_ manager: PeopleDetectionManager, didUpdate people: [PersonInFrame]) {
         
+        // TODO: Display rectangles with data
+        
+        guard let person = people.first else {
+            shapeView.frame = .zero
+            return
+        }
+        shapeView.frame = person.area.scaled(to: self.view.bounds.size)
+    }
+    
+}
+
+import UIKit
+
+extension CGRect {
+    
+    func scaled(to size: CGSize) -> CGRect {
+        return CGRect(
+            x: self.origin.x * size.width,
+            y: self.origin.y * size.height,
+            width: self.size.width * size.width,
+            height: self.size.height * size.height
+        )
     }
     
 }
