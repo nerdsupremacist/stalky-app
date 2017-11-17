@@ -1,4 +1,4 @@
 github "BoltsFramework/Bolts-ObjC" "1.8.4"
+github "mathiasquintero/Sweeft" "0.14.1"
 github "facebook/facebook-ios-sdk" "sdk-version-4.28.0"
 github "facebook/facebook-sdk-swift" "0.3.0"
-github "mathiasquintero/Sweeft" "0.14.1"
