@@ -20,9 +20,7 @@ class PersonInFrame {
     }
     
     convenience init(image: CIImage, area: CGRect) {
-        // TODO create request here!
-        let person = Person(name: "John Doe", link: nil)
-        self.init(person: .successful(with: person), area: area)
+        self.init(person: Person.person(in: image, area: area), area: area)
     }
     
 }
