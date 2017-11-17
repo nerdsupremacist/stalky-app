@@ -11,6 +11,7 @@
 		0EB58FD91FBF72170095D16F /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB58FD81FBF72170095D16F /* PeopleViewController.swift */; };
 		0EB58FDD1FBF73FD0095D16F /* PeopleDetectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB58FDC1FBF73FD0095D16F /* PeopleDetectionManager.swift */; };
 		0EB5908D1FBF969E0095D16F /* PersonInFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB5908C1FBF969E0095D16F /* PersonInFrame.swift */; };
+		0EB5908F1FBF9B330095D16F /* Sweeft.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EB5908E1FBF9B330095D16F /* Sweeft.framework */; };
 		C5FB34431FBF6928009295F4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB34421FBF6928009295F4 /* AppDelegate.swift */; };
 		C5FB34451FBF6928009295F4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB34441FBF6928009295F4 /* LoginViewController.swift */; };
 		C5FB344A1FBF6928009295F4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5FB34491FBF6928009295F4 /* Assets.xcassets */; };
@@ -30,6 +31,7 @@
 		0EB58FD81FBF72170095D16F /* PeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
 		0EB58FDC1FBF73FD0095D16F /* PeopleDetectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleDetectionManager.swift; sourceTree = "<group>"; };
 		0EB5908C1FBF969E0095D16F /* PersonInFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonInFrame.swift; sourceTree = "<group>"; };
+		0EB5908E1FBF9B330095D16F /* Sweeft.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sweeft.framework; path = Carthage/Build/iOS/Sweeft.framework; sourceTree = "<group>"; };
 		C5FB343F1FBF6928009295F4 /* Stalky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stalky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5FB34421FBF6928009295F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5FB34441FBF6928009295F4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				C5FB34621FBF79AD009295F4 /* Bolts.framework in Frameworks */,
 				C5FB34631FBF79AD009295F4 /* FacebookLogin.framework in Frameworks */,
 				C5FB34641FBF79AD009295F4 /* FBSDKShareKit.framework in Frameworks */,
+				0EB5908F1FBF9B330095D16F /* Sweeft.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +104,7 @@
 		C5FB34541FBF79AD009295F4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0EB5908E1FBF9B330095D16F /* Sweeft.framework */,
 				C5FB345A1FBF79AD009295F4 /* Bolts.framework */,
 				C5FB34561FBF79AD009295F4 /* FacebookCore.framework */,
 				C5FB345B1FBF79AD009295F4 /* FacebookLogin.framework */,
@@ -195,6 +199,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/FBSDKLoginKit.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/FBSDKPlacesKit.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/FBSDKShareKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Sweeft.framework",
 			);
 			name = Carthage;
 			outputPaths = (
@@ -206,6 +211,7 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/FBSDKLoginKit.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/FBSDKPlacesKit.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/FBSDKShareKit.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Sweeft.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
