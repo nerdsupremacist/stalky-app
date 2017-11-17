@@ -9,19 +9,6 @@
 import Vision
 import UIKit
 
-struct PersonInFrame {
-    let person: Person
-    let area: CGRect
-}
-
-extension PersonInFrame {
-    
-    func moved(to area: CGRect) -> PersonInFrame {
-        return PersonInFrame(person: person, area: area)
-    }
-    
-}
-
 protocol PeopleDetectionManagerDelegate: AnyObject {
     func manager(_ manager: PeopleDetectionManager, didUpdate people: [PersonInFrame])
 }
@@ -54,10 +41,7 @@ class PeopleDetectionManager {
         }
         
         guard let person = person else {
-            // TODO: Make Request
-            
-            let person = Person(name: "Mathias", link: nil)
-            self.person = .init(person: person, area: result.boundingBox)
+            self.person = .init(image: image, area: result.boundingBox)
             return
         }
         

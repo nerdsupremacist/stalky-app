@@ -141,7 +141,10 @@ extension PeopleViewController: PeopleDetectionManagerDelegate {
             shapeView.frame = .zero
             return
         }
-        shapeView.frame = person.area.scaled(to: self.view.bounds.size)
+        
+        UIView.animate(withDuration: 0.00001) {
+            self.shapeView.frame = person.area.scaled(to: self.view.bounds.size)
+        }
     }
     
 }
