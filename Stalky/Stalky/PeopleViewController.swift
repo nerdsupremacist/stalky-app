@@ -13,7 +13,6 @@ import Vision
 class PeopleViewController: UIViewController {
     
     var session: AVCaptureSession?
-    var shapeView = UIView()
     let shapeLayer = CAShapeLayer()
     
     lazy var detectionManager: PeopleDetectionManager = {
@@ -66,11 +65,6 @@ extension PeopleViewController {
         shapeLayer.setAffineTransform(CGAffineTransform(scaleX: -1, y: -1))
         
         view.layer.addSublayer(shapeLayer)
-        
-        shapeView.backgroundColor = .white
-        shapeView.frame = .zero
-        
-        view.addSubview(shapeView)
     }
     
 }
@@ -134,16 +128,9 @@ extension PeopleViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
 extension PeopleViewController: PeopleDetectionManagerDelegate {
     
     func manager(_ manager: PeopleDetectionManager, didUpdate people: [PersonInFrame]) {
-        
-        // TODO: Display rectangles with data
-        
-        guard let person = people.first else {
-            shapeView.frame = .zero
-            return
-        }
-        
-        UIView.animate(withDuration: 0.00001) {
-            self.shapeView.frame = person.area.scaled(to: self.view.bounds.size)
+        people.filter({ $0.displayView.superview == nil }).forEach { person in
+            self.view.addSubview(person.displayView)
+            person.updateFrame()
         }
     }
     

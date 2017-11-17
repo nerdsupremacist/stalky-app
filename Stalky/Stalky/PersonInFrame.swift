@@ -12,7 +12,18 @@ import Sweeft
 class PersonInFrame {
     
     let person: Response<Person>
-    let area: CGRect
+    private(set) var area: CGRect {
+        didSet {
+            updateFrame()
+        }
+    }
+    
+    lazy private(set) var displayView: UIView = {
+        // TODO:
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
     
     init(person: Response<Person>, area: CGRect) {
         self.person = person
@@ -23,12 +34,29 @@ class PersonInFrame {
         self.init(person: Person.person(in: image, area: area), area: area)
     }
     
+    deinit {
+//        guard displayView.superview != nil else { return }
+//        .main >>> {
+//            self.displayView.removeFromSuperview()
+//        }
+    }
+    
+    func updateFrame() {
+        .main >>> {
+            guard let superView = self.displayView.superview else {
+                return
+            }
+            self.displayView.frame = self.area.scaled(to: superView.bounds.size)
+        }
+    }
+    
 }
 
 extension PersonInFrame {
     
-    func moved(to area: CGRect) -> PersonInFrame {
-        return PersonInFrame(person: person, area: area)
+    func move(to area: CGRect) -> PersonInFrame {
+        self.area = area
+        return self
     }
     
 }

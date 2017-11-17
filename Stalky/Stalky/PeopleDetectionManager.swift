@@ -45,7 +45,7 @@ class PeopleDetectionManager {
             return
         }
         
-        self.person = person.moved(to: result.boundingBox)
+        self.person = person.move(to: result.boundingBox)
     }
     
 }
