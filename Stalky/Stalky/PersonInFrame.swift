@@ -35,10 +35,11 @@ class PersonInFrame {
     }
     
     deinit {
-//        guard displayView.superview != nil else { return }
-//        .main >>> {
-//            self.displayView.removeFromSuperview()
-//        }
+        let view = displayView
+        DispatchQueue.main >>> {
+            guard view.superview != nil else { return }
+            view.removeFromSuperview()
+        }
     }
     
     func updateFrame() {
