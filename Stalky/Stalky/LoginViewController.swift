@@ -7,19 +7,37 @@
 //
 
 import UIKit
+import FacebookCore
+import FacebookLogin
 
 class LoginViewController: UIViewController {
 
+    private let loginManager = LoginManager()
+
+    let loginButton = UIButton(type: .custom)
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        if AccessToken.current == nil {
+            let loginButton = LoginButton(readPermissions: [.publicProfile, .userFriends])
+            loginButton.center = view.center
+            loginButton.delegate = self
+            view.addSubview(loginButton)
+        } else {
+            navigationController?.pushViewController(PeopleViewController(), animated: true)
+        }
+    }
+}
+
+extension LoginViewController: LoginButtonDelegate {
+    func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
+        dismiss(animated: true, completion: nil)
+        navigationController?.pushViewController(PeopleViewController(), animated: true)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func loginButtonDidLogOut(_ loginButton: LoginButton) {
+
     }
-
-
 }
 
