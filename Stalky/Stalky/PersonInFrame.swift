@@ -21,7 +21,9 @@ class PersonInFrame {
     lazy private(set) var displayView: UIView = {
         // TODO:
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
+        view.layer.borderWidth = 5
+        view.layer.borderColor = UIColor.red.cgColor
         return view
     }()
     
