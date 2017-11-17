@@ -223,7 +223,6 @@
 				C5FB34451FBF6928009295F4 /* LoginViewController.swift in Sources */,
 				0EB58FD71FBF71CD0095D16F /* Person.swift in Sources */,
 				0EB58FD91FBF72170095D16F /* PeopleViewController.swift in Sources */,
-				C5FB34451FBF6928009295F4 /* ViewController.swift in Sources */,
 				0EB58FDD1FBF73FD0095D16F /* PeopleDetectionManager.swift in Sources */,
 				C5FB34431FBF6928009295F4 /* AppDelegate.swift in Sources */,
 			);
