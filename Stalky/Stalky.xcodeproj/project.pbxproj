@@ -68,6 +68,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C593CFCB1FBFAE73003DDF86 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				0EB5908C1FBF969E0095D16F /* PersonInFrame.swift */,
+				C593CFCE1FBFAEAC003DDF86 /* Views */,
+				C593CFCD1FBFAEA3003DDF86 /* View Controllers */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		C593CFCC1FBFAE8E003DDF86 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0EB58FDC1FBF73FD0095D16F /* PeopleDetectionManager.swift */,
+				0EB58FD61FBF71CD0095D16F /* Person.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		C593CFCD1FBFAEA3003DDF86 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C5FB34441FBF6928009295F4 /* LoginViewController.swift */,
+				0EB58FD81FBF72170095D16F /* PeopleViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		C593CFCE1FBFAEAC003DDF86 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		C593CFCF1FBFAEB8003DDF86 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C5FB344B1FBF6928009295F4 /* LaunchScreen.storyboard */,
+				C5FB344E1FBF6928009295F4 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		C5FB34361FBF6928009295F4 = {
 			isa = PBXGroup;
 			children = (
@@ -89,14 +133,10 @@
 			isa = PBXGroup;
 			children = (
 				C5FB34421FBF6928009295F4 /* AppDelegate.swift */,
-				C5FB34441FBF6928009295F4 /* LoginViewController.swift */,
-				0EB58FD61FBF71CD0095D16F /* Person.swift */,
-				0EB5908C1FBF969E0095D16F /* PersonInFrame.swift */,
-				0EB58FDC1FBF73FD0095D16F /* PeopleDetectionManager.swift */,
-				0EB58FD81FBF72170095D16F /* PeopleViewController.swift */,
+				C593CFCC1FBFAE8E003DDF86 /* Model */,
+				C593CFCB1FBFAE73003DDF86 /* UI */,
+				C593CFCF1FBFAEB8003DDF86 /* Supporting Files */,
 				C5FB34491FBF6928009295F4 /* Assets.xcassets */,
-				C5FB344B1FBF6928009295F4 /* LaunchScreen.storyboard */,
-				C5FB344E1FBF6928009295F4 /* Info.plist */,
 			);
 			path = Stalky;
 			sourceTree = "<group>";
