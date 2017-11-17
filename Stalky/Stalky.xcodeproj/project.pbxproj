@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0EB58FD71FBF71CD0095D16F /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB58FD61FBF71CD0095D16F /* Person.swift */; };
+		0EB58FD91FBF72170095D16F /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB58FD81FBF72170095D16F /* PeopleViewController.swift */; };
+		0EB58FDD1FBF73FD0095D16F /* PeopleDetectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB58FDC1FBF73FD0095D16F /* PeopleDetectionManager.swift */; };
 		C5FB34431FBF6928009295F4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB34421FBF6928009295F4 /* AppDelegate.swift */; };
 		C5FB34451FBF6928009295F4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB34441FBF6928009295F4 /* LoginViewController.swift */; };
 		C5FB34481FBF6928009295F4 /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5FB34461FBF6928009295F4 /* LoginViewController.storyboard */; };
@@ -23,6 +26,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0EB58FD61FBF71CD0095D16F /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		0EB58FD81FBF72170095D16F /* PeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
+		0EB58FDC1FBF73FD0095D16F /* PeopleDetectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleDetectionManager.swift; sourceTree = "<group>"; };
 		C5FB343F1FBF6928009295F4 /* Stalky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stalky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5FB34421FBF6928009295F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5FB34441FBF6928009295F4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +88,10 @@
 				C5FB34421FBF6928009295F4 /* AppDelegate.swift */,
 				C5FB34441FBF6928009295F4 /* LoginViewController.swift */,
 				C5FB34461FBF6928009295F4 /* LoginViewController.storyboard */,
+				C5FB34441FBF6928009295F4 /* ViewController.swift */,
+				0EB58FD61FBF71CD0095D16F /* Person.swift */,
+				0EB58FDC1FBF73FD0095D16F /* PeopleDetectionManager.swift */,
+				0EB58FD81FBF72170095D16F /* PeopleViewController.swift */,
 				C5FB34491FBF6928009295F4 /* Assets.xcassets */,
 				C5FB344B1FBF6928009295F4 /* LaunchScreen.storyboard */,
 				C5FB344E1FBF6928009295F4 /* Info.plist */,
@@ -211,6 +221,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5FB34451FBF6928009295F4 /* LoginViewController.swift in Sources */,
+				0EB58FD71FBF71CD0095D16F /* Person.swift in Sources */,
+				0EB58FD91FBF72170095D16F /* PeopleViewController.swift in Sources */,
+				C5FB34451FBF6928009295F4 /* ViewController.swift in Sources */,
+				0EB58FDD1FBF73FD0095D16F /* PeopleDetectionManager.swift in Sources */,
 				C5FB34431FBF6928009295F4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
