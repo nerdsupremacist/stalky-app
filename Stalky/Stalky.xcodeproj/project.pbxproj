@@ -86,10 +86,6 @@
 			isa = PBXGroup;
 			children = (
 				C5FB34421FBF6928009295F4 /* AppDelegate.swift */,
-<<<<<<< Updated upstream
-=======
-				C5FB34461FBF6928009295F4 /* LoginViewController.storyboard */,
->>>>>>> Stashed changes
 				C5FB34441FBF6928009295F4 /* LoginViewController.swift */,
 				0EB58FD61FBF71CD0095D16F /* Person.swift */,
 				0EB5908C1FBF969E0095D16F /* PersonInFrame.swift */,
