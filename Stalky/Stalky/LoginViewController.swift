@@ -7,33 +7,26 @@
 //
 
 import UIKit
-import FacebookCore
 import FacebookLogin
 
 class LoginViewController: UIViewController {
 
-    private let loginManager = LoginManager()
-
-    let loginButton = UIButton(type: .custom)
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if AccessToken.current == nil {
-            let loginButton = LoginButton(readPermissions: [.publicProfile, .userFriends])
-            loginButton.center = view.center
-            loginButton.delegate = self
-            view.addSubview(loginButton)
-        } else {
-            navigationController?.pushViewController(PeopleViewController(), animated: true)
-        }
+        view.backgroundColor = .white
+
+        let loginButton = LoginButton(readPermissions: [.publicProfile, .userFriends])
+        loginButton.center = view.center
+        loginButton.delegate = self
+        view.addSubview(loginButton)
     }
 }
 
 extension LoginViewController: LoginButtonDelegate {
     func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
-        dismiss(animated: true, completion: nil)
-        navigationController?.pushViewController(PeopleViewController(), animated: true)
+        print("Logged in successfully")
+        UIApplication.shared.keyWindow?.rootViewController = PeopleViewController()
     }
 
     func loginButtonDidLogOut(_ loginButton: LoginButton) {
