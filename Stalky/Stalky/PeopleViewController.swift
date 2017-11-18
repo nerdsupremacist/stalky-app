@@ -30,7 +30,7 @@ class PeopleViewController: UIViewController {
     var device: AVCaptureDevice? = {
         return .default(AVCaptureDevice.DeviceType.builtInWideAngleCamera,
                         for: AVMediaType.video,
-                        position: .front)
+                        position: .back)
     }()
     
 }
@@ -61,9 +61,9 @@ extension PeopleViewController {
         view.layer.addSublayer(previewLayer)
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
         switch UIDevice.current.orientation {
         case .landscapeRight:
             previewLayer?.connection?.videoOrientation = .landscapeLeft
@@ -121,9 +121,9 @@ extension UIDeviceOrientation {
         switch self {
         case .portrait:
             return Int32(UIImageOrientation.leftMirrored.rawValue)
-        case .landscapeLeft:
-            return Int32(UIImageOrientation.upMirrored.rawValue)
         case .landscapeRight:
+            return Int32(UIImageOrientation.upMirrored.rawValue)
+        case .landscapeLeft:
             return Int32(UIImageOrientation.up.rawValue)
         default:
             return Int32(UIImageOrientation.leftMirrored.rawValue)
