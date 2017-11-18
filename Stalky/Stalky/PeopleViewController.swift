@@ -170,8 +170,6 @@ extension PeopleViewController: PeopleDetectionManagerDelegate {
     
 }
 
-import UIKit
-
 extension CGRect {
     
     func scaled(to size: CGSize) -> CGRect {
