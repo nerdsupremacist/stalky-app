@@ -28,6 +28,11 @@ class PersonInFrame {
     init(person: Response<Person>, area: CGRect) {
         self.person = person
         self.area = area
+        person.onSuccess { person in
+            DispatchQueue.main.async {
+                self.displayView.animate(text: person.name)
+            }
+        }
     }
     
     convenience init(image: CIImage, area: CGRect) {

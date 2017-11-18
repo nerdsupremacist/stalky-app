@@ -60,40 +60,4 @@ extension LoginViewController: LoginButtonDelegate {
     }
 }
 
-extension UILabel {
-
-    func animate(text: String, delay: TimeInterval) {
-        guard let character = text.first else {
-            guard let labelText = self.text else { return }
-            self.animateCursor(text: labelText, delay: delay)
-            return
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            self.text = (self.text?.dropLast() ?? "").appending(String(character)).appending("_")
-            self.animate(text: String(text.dropFirst()), delay: delay)
-        }
-    }
-
-    func animateCursor(text: String, delay: TimeInterval) {
-        // Animate cursor blinking
-        let attributedString = NSMutableAttributedString(string: text)
-        let rangeOfUnderScore = (text as NSString).range(of: "_")
-        attributedString.addAttribute(.foregroundColor,
-                                      value: UIColor.white,
-                                      range: rangeOfUnderScore)
-        self.attributedText = attributedString
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            let attributedString = NSMutableAttributedString(string: text)
-            let rangeOfUnderScore = (text as NSString).range(of: "_")
-            attributedString.addAttribute(.foregroundColor,
-                                          value: UIColor.magenta,
-                                          range: rangeOfUnderScore)
-            self.attributedText = attributedString
-        }
-
-    }
-
-}
 
