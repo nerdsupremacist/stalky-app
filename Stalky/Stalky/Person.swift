@@ -11,13 +11,44 @@ import UIKit
 
 struct Person: Codable {
     let name: String
-    let birthday: Date?
-    let dateOfFirstEncounter: Date?
+    let birthday: String?
+    let dateOfFirstEncounter: String?
     let likes: [String]?
     let address: String?
     let education: String?
     let employer: String?
     let link: URL?
+
+    init(name: String,
+         birthday: Date? = nil,
+         dateOfFirstEncounter: Date? = nil,
+         likes: [String]? = nil,
+         address: String? = nil,
+         education: String? = nil,
+         employer: String? = nil,
+         link: URL? = nil) {
+
+        self.name = name
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.YYYY"
+        if let birthday = birthday {
+            self.birthday = dateFormatter.string(from: birthday)
+        } else {
+            self.birthday = nil
+        }
+        if let dateOfFirstEncounter = dateOfFirstEncounter {
+            self.dateOfFirstEncounter = dateFormatter.string(from: dateOfFirstEncounter)
+        } else {
+            self.dateOfFirstEncounter = nil
+        }
+
+        self.likes = likes
+        self.address = address
+        self.education = education
+        self.employer = employer
+        self.link = link
+    }
 }
 
 extension Person {
@@ -39,13 +70,13 @@ extension Person {
 //            }
 //        }
 
-        let person = Person(name: "Mathias Quintero",
-                            birthday: DateComponents(year: 1996, month: 5, day: 29).date,
-                            dateOfFirstEncounter: DateComponents(year: 2015, month: 4, day: 23).date,
-                            likes: ["programming", "alcohol"],
+        let person = Person(name: "Jana Pejić",
+                            birthday: Calendar(identifier: .gregorian).date(from: DateComponents(year: 1991, month: 3, day: 14)),
+                            dateOfFirstEncounter: Calendar(identifier: .gregorian).date(from: DateComponents(year: 2015, month: 4, day: 23)),
+                            likes: ["programming", "dancing"],
                             address: "Munich, Germany",
                             education: "TUM",
-                            employer: "TUM",
+                            employer: "NSA, CIA, FBI",
                             link: nil)
         return .successful(with: person)
     }

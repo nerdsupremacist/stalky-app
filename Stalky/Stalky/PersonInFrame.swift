@@ -30,7 +30,7 @@ class PersonInFrame {
         self.area = area
         person.onSuccess { person in
             DispatchQueue.main.async {
-                var text = person.name
+                var text = "Name: \(person.name)"
 
                 if let birthday = person.birthday {
                     text.append("\n")
