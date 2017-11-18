@@ -11,6 +11,7 @@ import UIKit
 class AimView: UIView {
 
     private let infoLabel = UILabel()
+    private var blurViewWidthConstraint: NSLayoutConstraint!
     private var blurViewHeightConstraint: NSLayoutConstraint!
 
     enum Color {
@@ -45,9 +46,11 @@ class AimView: UIView {
         blurView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(blurView)
 
-        blurView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        blurView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         blurView.topAnchor.constraint(equalTo: bottomAnchor, constant: 10).isActive = true
+        blurView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+
+        blurViewWidthConstraint = blurView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
+        blurViewWidthConstraint.isActive = true
         blurViewHeightConstraint = blurView.heightAnchor.constraint(equalToConstant: 0)
         blurViewHeightConstraint.isActive = true
 
@@ -68,7 +71,7 @@ class AimView: UIView {
 
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
         infoLabel.textColor = .white
-        infoLabel.font = UIFont(name: "CourierNewPS-BoldMT", size: 20)
+        infoLabel.font = UIFont(name: "CourierNewPS-BoldMT", size: 12)
         infoLabel.numberOfLines = 0
         addSubview(infoLabel)
         clipsToBounds = false
@@ -85,7 +88,8 @@ class AimView: UIView {
                                                                 options: .usesLineFragmentOrigin,
                                                                 attributes: [NSAttributedStringKey.font : infoLabel.font],
                                                                 context: nil)
-        blurViewHeightConstraint.constant = expectedLabelSize.height + 20
+        blurViewWidthConstraint.constant = expectedLabelSize.width + 30
+        blurViewHeightConstraint.constant = expectedLabelSize.height + 30
 
         infoLabel.animate(text: text, delay: 0.1)
     }
