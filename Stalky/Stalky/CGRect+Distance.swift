@@ -14,7 +14,7 @@ extension CGRect {
         let paths: [KeyPath<CGRect, CGFloat>] = [
             \.origin.x,
             \.origin.y,
-            ]
+        ]
         let differences = paths.map { abs(self[keyPath: $0] - other[keyPath: $0]) }
         return differences.reduce(0.0) { $0 + $1 }
     }

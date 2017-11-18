@@ -12,7 +12,7 @@ import Sweeft
 class PersonInFrame {
     
     let person: Response<Person>
-    var alreadyAppeared = false
+    var isAnimatingMovement = true
     private(set) var area: CGRect {
         didSet {
             updateFrame()
@@ -52,16 +52,17 @@ class PersonInFrame {
             guard let superView = self.displayView.superview else {
                 return
             }
+            self.isAnimatingMovement = true
             if isFirstAppearance {
                 self.displayView.frame = self.area.scaled(to: superView.bounds.size).with(padding: 150)
                 self.displayView.setNeedsDisplay()
-                UIView.animate(withDuration: 0.1, animations: {
-                    self.displayView.frame = self.area.scaled(to: superView.bounds.size).with(padding: 40)
-                }) { success in
-                    self.alreadyAppeared = true
-                }
             }
-            self.displayView.frame = self.area.scaled(to: superView.bounds.size).with(padding: 40)
+            let duration = isFirstAppearance ? 0.1 : 0.05
+            UIView.animate(withDuration: duration, animations: {
+                self.displayView.frame = self.area.scaled(to: superView.bounds.size).with(padding: 40)
+            }) { success in
+                self.isAnimatingMovement = false
+            }
             self.displayView.setNeedsDisplay()
         }
     }
@@ -71,7 +72,8 @@ class PersonInFrame {
 extension PersonInFrame {
     
     func move(to area: CGRect) -> PersonInFrame {
-        guard alreadyAppeared else { return self }
+        guard !isAnimatingMovement else { return self }
+//        guard self.area.distance(to: area) > 0.06 else { return self }
         self.area = area
         return self
     }
