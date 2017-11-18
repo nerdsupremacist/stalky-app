@@ -39,7 +39,6 @@ class AimView: UIView {
     }
 
     private func setup() {
-
         // Blurred background
 
         let blurView = UIView()

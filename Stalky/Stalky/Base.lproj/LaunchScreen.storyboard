@@ -17,14 +17,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ghost" translatesAutoresizingMaskIntoConstraints="NO" id="8m7-pJ-aqK">
-                                <rect key="frame" x="162" y="386" width="50" height="50"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ghost" translatesAutoresizingMaskIntoConstraints="NO" id="iqR-30-s2J">
+                                <rect key="frame" x="171" y="394.66666666666669" width="33" height="33"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="8m7-pJ-aqK" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="apQ-aM-8XP"/>
-                            <constraint firstItem="8m7-pJ-aqK" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="dSm-Ho-ihv"/>
+                            <constraint firstItem="iqR-30-s2J" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="ixY-2E-es9"/>
+                            <constraint firstItem="iqR-30-s2J" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="wY2-NC-BL5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -35,6 +35,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ghost" width="50" height="50"/>
+        <image name="ghost" width="33" height="33"/>
     </resources>
 </document>
