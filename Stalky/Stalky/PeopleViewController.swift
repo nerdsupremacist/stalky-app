@@ -83,6 +83,7 @@ extension PeopleViewController {
         print("Recognized three taps")
         let loginManager = LoginManager()
         loginManager.logOut()
+        UIApplication.shared.keyWindow?.rootViewController = LoginViewController()
     }
     
 }
