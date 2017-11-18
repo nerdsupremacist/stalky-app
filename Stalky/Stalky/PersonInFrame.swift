@@ -18,8 +18,7 @@ class PersonInFrame {
         }
     }
     
-    lazy private(set) var displayView: UIView = {
-        // TODO:
+    lazy private(set) var displayView: AimView = {
         let view = AimView()
         view.backgroundColor = .clear
         return view
