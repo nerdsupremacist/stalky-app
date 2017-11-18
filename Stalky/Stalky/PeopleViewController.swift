@@ -13,7 +13,6 @@ import Vision
 class PeopleViewController: UIViewController {
     
     var session: AVCaptureSession?
-    let shapeLayer = CAShapeLayer()
     
     lazy var detectionManager: PeopleDetectionManager = {
         return PeopleDetectionManager(delegate: self)
@@ -30,7 +29,8 @@ class PeopleViewController: UIViewController {
     
     var device: AVCaptureDevice? = {
         return .default(AVCaptureDevice.DeviceType.builtInWideAngleCamera,
-                        for: AVMediaType.video, position: .back)
+                        for: AVMediaType.video,
+                        position: .back)
     }()
     
 }
@@ -48,23 +48,30 @@ extension PeopleViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        previewLayer?.frame = view.frame
-        shapeLayer.frame = view.frame
+        previewLayer?.frame = view.bounds
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         guard let previewLayer = previewLayer else { return }
-        
         view.layer.addSublayer(previewLayer)
-        
-        shapeLayer.strokeColor = UIColor.red.cgColor
-        shapeLayer.lineWidth = 2.0
-        
-        //needs to filp coordinate system for Vision
-        shapeLayer.setAffineTransform(CGAffineTransform(scaleX: -1, y: -1))
-        
-        view.layer.addSublayer(shapeLayer)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        switch UIApplication.shared.statusBarOrientation {
+        case .landscapeLeft:
+            previewLayer?.connection?.videoOrientation = .landscapeLeft
+        case .landscapeRight:
+            previewLayer?.connection?.videoOrientation = .landscapeRight
+        case .portrait:
+            previewLayer?.connection?.videoOrientation = .portrait
+        case .portraitUpsideDown:
+            previewLayer?.connection?.videoOrientation = .portraitUpsideDown
+        case .unknown:
+            previewLayer?.connection?.videoOrientation = .portrait
+        }
     }
     
 }
@@ -104,6 +111,24 @@ extension PeopleViewController {
     
 }
 
+extension UIInterfaceOrientation {
+    
+    var exifOrientation: Int32 {
+        switch self {
+        case .portrait:
+            return Int32(UIImageOrientation.leftMirrored.rawValue)
+        case .landscapeLeft:
+            return Int32(UIImageOrientation.upMirrored.rawValue)
+        case .landscapeRight:
+            return Int32(UIImageOrientation.up.rawValue)
+        default:
+            return Int32(UIImageOrientation.leftMirrored.rawValue)
+        }
+    }
+    
+    
+}
+
 // MARK: - Image Capture
 
 extension PeopleViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
@@ -117,8 +142,10 @@ extension PeopleViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         let attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault, sampleBuffer, kCMAttachmentMode_ShouldPropagate)
         let ciImage = CIImage(cvImageBuffer: pixelBuffer!, options: attachments as! [String : Any]?)
         
-        //leftMirrored for front camera
-        let ciImageWithOrientation = ciImage.oriented(forExifOrientation: Int32(UIImageOrientation.leftMirrored.rawValue))
+        // leftMirrored for front camera
+        let ciImageWithOrientation = DispatchQueue.main.sync {
+            return ciImage.oriented(forExifOrientation: UIApplication.shared.statusBarOrientation.exifOrientation)
+        }
         
         detectionManager.updated(with: ciImageWithOrientation)
     }
