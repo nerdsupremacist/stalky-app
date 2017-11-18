@@ -9,6 +9,29 @@
 import Vision
 import UIKit
 
+let boundingBoxChangeTolerance: CGFloat = 10.0
+
+private enum StateChangeResult {
+    case remainedFromLastFrame(previous: PersonInFrame, VNFaceObservation)
+    case new(VNFaceObservation)
+}
+
+extension StateChangeResult {
+    
+    func person(in image: CIImage) -> PersonInFrame {
+        
+        switch self {
+            
+        case .new(let observation):
+            return PersonInFrame(image: image, area: observation.boundingBox)
+            
+        case .remainedFromLastFrame(let previous, let observation):
+            return previous.move(to: observation.boundingBox)
+        }
+    }
+    
+}
+
 protocol PeopleDetectionManagerDelegate: AnyObject {
     func manager(_ manager: PeopleDetectionManager, didUpdate people: [PersonInFrame])
 }
@@ -20,10 +43,10 @@ class PeopleDetectionManager {
     weak var delegate: PeopleDetectionManagerDelegate?
     var delegateQueue: DispatchQueue = .main
     
-    private var person: PersonInFrame? {
+    private var people = [PersonInFrame]() {
         didSet {
+            let people = self.people
             delegateQueue.async {
-                let people = [self.person].flatMap { $0 }
                 self.delegate?.manager(self, didUpdate: people)
             }
         }
@@ -35,17 +58,40 @@ class PeopleDetectionManager {
     
     func updated(with image: CIImage) {
         try? faceDetectionRequest.perform([faceDetection], on: image)
-        guard let result = faceDetection.results?.first as? VNFaceObservation else {
-            person = nil
-            return
+        let results = faceDetection.results?.flatMap { $0 as? VNFaceObservation } ?? []
+        print("\(results.count) faces in frame")
+        let changes = stateChanges(from: results)
+        self.people = changes.map { $0.person(in: image) }
+    }
+    
+}
+
+extension PeopleDetectionManager {
+    
+    fileprivate func stateChanges(from results: [VNFaceObservation]) -> [StateChangeResult] {
+        return results.map { result in
+            guard let previous = self.people.argmax({ $0.area.distance(to: result.boundingBox) }),
+                previous.area.distance(to: result.boundingBox) < boundingBoxChangeTolerance else {
+                    
+                return .new(result)
+            }
+            return .remainedFromLastFrame(previous: previous, result)
         }
-        
-        guard let person = person else {
-            self.person = .init(image: image, area: result.boundingBox)
-            return
-        }
-        
-        self.person = person.move(to: result.boundingBox)
+    }
+    
+}
+
+extension CGRect {
+    
+    func distance(to other: CGRect) -> CGFloat {
+        let paths: [KeyPath<CGRect, CGFloat>] = [
+            \.origin.x,
+            \.origin.y,
+            \.size.width,
+            \.size.height,
+        ]
+        let differences = paths.map { self[keyPath: $0] - other[keyPath: $0] }
+        return differences.reduce(0.0) { $0 + $1 }
     }
     
 }
