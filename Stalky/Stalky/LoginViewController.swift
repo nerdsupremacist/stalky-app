@@ -62,8 +62,12 @@ class LoginViewController: UIViewController {
             .userAboutMe,
             .userBirthday,
             .userEducationHistory,
+            .userWorkHistory,
             .userFriends,
             .userPhotos,
+            .userRelationships,
+            .userRelationshipDetails,
+            .userEvents,
         ])
         loginButton.delegate = self
         loginButton.translatesAutoresizingMaskIntoConstraints = false
