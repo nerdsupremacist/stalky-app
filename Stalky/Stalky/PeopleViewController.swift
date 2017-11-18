@@ -30,7 +30,7 @@ class PeopleViewController: UIViewController {
     var device: AVCaptureDevice? = {
         return .default(AVCaptureDevice.DeviceType.builtInWideAngleCamera,
                         for: AVMediaType.video,
-                        position: .back)
+                        position: .front)
     }()
     
 }
