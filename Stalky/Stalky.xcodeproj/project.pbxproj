@@ -14,6 +14,7 @@
 		0EB5908F1FBF9B330095D16F /* Sweeft.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EB5908E1FBF9B330095D16F /* Sweeft.framework */; };
 		0EB590911FBFD50C0095D16F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB590901FBFD50C0095D16F /* API.swift */; };
 		C559CCAB1FC066A700DB1244 /* UILabel+Animate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CCAA1FC066A700DB1244 /* UILabel+Animate.swift */; };
+		C559CCAD1FC06F4D00DB1244 /* CGRect+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559CCAC1FC06F4D00DB1244 /* CGRect+Distance.swift */; };
 		C593CFD11FBFAF86003DDF86 /* AimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593CFD01FBFAF86003DDF86 /* AimView.swift */; };
 		C5FB34431FBF6928009295F4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB34421FBF6928009295F4 /* AppDelegate.swift */; };
 		C5FB34451FBF6928009295F4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB34441FBF6928009295F4 /* LoginViewController.swift */; };
@@ -37,6 +38,7 @@
 		0EB5908E1FBF9B330095D16F /* Sweeft.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sweeft.framework; path = Carthage/Build/iOS/Sweeft.framework; sourceTree = "<group>"; };
 		0EB590901FBFD50C0095D16F /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		C559CCAA1FC066A700DB1244 /* UILabel+Animate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Animate.swift"; sourceTree = "<group>"; };
+		C559CCAC1FC06F4D00DB1244 /* CGRect+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Distance.swift"; sourceTree = "<group>"; };
 		C593CFD01FBFAF86003DDF86 /* AimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AimView.swift; sourceTree = "<group>"; };
 		C5FB343F1FBF6928009295F4 /* Stalky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stalky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5FB34421FBF6928009295F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 			children = (
 				0EB5908C1FBF969E0095D16F /* PersonInFrame.swift */,
 				C559CCAA1FC066A700DB1244 /* UILabel+Animate.swift */,
+				C559CCAC1FC06F4D00DB1244 /* CGRect+Distance.swift */,
 				C593CFCE1FBFAEAC003DDF86 /* Views */,
 				C593CFCD1FBFAEA3003DDF86 /* View Controllers */,
 			);
@@ -281,6 +284,7 @@
 				0EB58FDD1FBF73FD0095D16F /* PeopleDetectionManager.swift in Sources */,
 				0EB590911FBFD50C0095D16F /* API.swift in Sources */,
 				C559CCAB1FC066A700DB1244 /* UILabel+Animate.swift in Sources */,
+				C559CCAD1FC06F4D00DB1244 /* CGRect+Distance.swift in Sources */,
 				C5FB34431FBF6928009295F4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
