@@ -23,9 +23,10 @@ extension StateChangeResult {
         switch self {
             
         case .new(let observation):
-            return PersonInFrame(image: image, area: observation.boundingBox)
+            return PersonInFrame(area: observation.boundingBox)
             
         case .remainedFromLastFrame(let previous, let observation):
+            previous.received(newImage: image)
             return previous.move(to: observation.boundingBox)
         }
     }

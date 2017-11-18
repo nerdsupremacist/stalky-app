@@ -57,11 +57,15 @@ extension Person {
 
         return async {
             let area = area.scaled(to: image.extent.size).with(padding: 100.0)
-            guard let data = image.cropped(to: area).jpeg() else {
+            guard let data = image.cropped(to: area).oriented(forExifOrientation: Int32(CGImagePropertyOrientation.leftMirrored.rawValue)).jpeg() else {
+                
                 throw APIError.noData
             }
             
             let name = "\(UUID().uuidString).jpg"
+            
+            let url = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+            try data.write(to: url.appendingPathComponent(name))
             
             let file = File(data: data, name: name, mimeType: "application/octet-stream")
             return MultiformData(parameters: [:], boundary: UUID().uuidString, files: [file])
@@ -88,8 +92,6 @@ extension Person {
 //                    }
                 }
         }
-        
-//        return .successful(with: person)
     }
     
 }

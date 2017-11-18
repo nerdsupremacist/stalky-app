@@ -12,7 +12,11 @@ import Sweeft
 class PersonInFrame {
     
     let person: Response<Person>
+    fileprivate var personSetter: Response<Person>.Setter.Weak?
+    
     var isAnimatingMovement = false
+    var appearancesCounter = 1
+    
     private(set) var area: CGRect {
         didSet {
             updateFrame()
@@ -25,9 +29,14 @@ class PersonInFrame {
         return view
     }()
     
-    init(person: Response<Person>, area: CGRect) {
-        self.person = person
+    init(area: CGRect) {
         self.area = area
+        var personSetter: Response<Person>.Setter.Weak?
+        self.person = .new { setter in
+            personSetter = setter.weak()
+        }
+        self.personSetter = personSetter
+        
         person.onSuccess(in: .main) { [weak self] person in
             
             var text = "Name: \(person.name)\n"
@@ -72,16 +81,23 @@ class PersonInFrame {
         }
     }
     
-    convenience init(image: CIImage, area: CGRect) {
-        self.init(person: Person.person(in: image, area: area), area: area)
-    }
-    
     deinit {
         let view = displayView
         person.cancel()
         DispatchQueue.main >>> {
             guard view.superview != nil else { return }
             view.removeFromSuperview()
+        }
+    }
+    
+    func received(newImage: CIImage) {
+        appearancesCounter += 1
+        guard let personSetter = personSetter, appearancesCounter > 3 else {
+            return
+        }
+        self.personSetter = nil
+        Person.person(in: newImage, area: area).onResult { result in
+            personSetter.write(result: result)
         }
     }
     
