@@ -55,7 +55,15 @@ class LoginViewController: UIViewController {
         aboutLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 
         // Login button
-        let loginButton = LoginButton(readPermissions: [.publicProfile, .userFriends])
+        let loginButton = LoginButton(readPermissions: [
+            .publicProfile,
+            .userFriends,
+            .userAboutMe,
+            .userBirthday,
+            .userEducationHistory,
+            .userFriends,
+            .userPhotos,
+        ])
         loginButton.delegate = self
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loginButton)
