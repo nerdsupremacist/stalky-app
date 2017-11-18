@@ -20,10 +20,8 @@ class PersonInFrame {
     
     lazy private(set) var displayView: UIView = {
         // TODO:
-        let view = UIView()
+        let view = AimView()
         view.backgroundColor = .clear
-        view.layer.borderWidth = 5
-        view.layer.borderColor = UIColor.red.cgColor
         return view
     }()
     
@@ -49,7 +47,8 @@ class PersonInFrame {
             guard let superView = self.displayView.superview else {
                 return
             }
-            self.displayView.frame = self.area.scaled(to: superView.bounds.size)
+            self.displayView.frame = self.area.scaled(to: superView.bounds.size).with(padding: 40)
+            self.displayView.setNeedsDisplay()
         }
     }
     
