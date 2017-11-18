@@ -10,6 +10,8 @@ import UIKit
 
 class AimView: UIView {
 
+    private let infoLabel = UILabel()
+
     enum Color {
         case red
         case green
@@ -22,6 +24,33 @@ class AimView: UIView {
         didSet {
             setNeedsDisplay()
         }
+    }
+
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        setup()
+    }
+
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
+    private func setup() {
+        infoLabel.translatesAutoresizingMaskIntoConstraints = false
+        infoLabel.textColor = .white
+        infoLabel.font = UIFont(name: "CourierNewPS-BoldMT", size: 20)
+        infoLabel.numberOfLines = 0
+        addSubview(infoLabel)
+        clipsToBounds = false
+        infoLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        infoLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        infoLabel.topAnchor.constraint(equalTo: bottomAnchor, constant: 20).isActive = true
+    }
+
+    func animate(text: String) {
+        infoLabel.text = nil
+        infoLabel.animate(text: text, delay: 0.1)
     }
 
     override func draw(_ rect: CGRect) {
