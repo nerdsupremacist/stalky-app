@@ -59,7 +59,6 @@ class PeopleDetectionManager {
     func updated(with image: CIImage) {
         try? faceDetectionRequest.perform([faceDetection], on: image)
         let results = faceDetection.results?.flatMap { $0 as? VNFaceObservation } ?? []
-        print("\(results.count) faces in frame")
         let changes = stateChanges(from: results)
         self.people = changes.map { $0.person(in: image) }
     }
@@ -70,7 +69,7 @@ extension PeopleDetectionManager {
     
     fileprivate func stateChanges(from results: [VNFaceObservation]) -> [StateChangeResult] {
         return results.map { result in
-            guard let previous = self.people.argmax({ $0.area.distance(to: result.boundingBox) }),
+            guard let previous = self.people.argmin({ $0.area.distance(to: result.boundingBox) }),
                 previous.area.distance(to: result.boundingBox) < boundingBoxChangeTolerance else {
                     
                 return .new(result)
