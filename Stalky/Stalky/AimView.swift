@@ -9,11 +9,17 @@
 import UIKit
 
 class AimView: UIView {
-    
+
+    var color: UIColor = .red {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+
     override func draw(_ rect: CGRect) {
         guard let context = UIGraphicsGetCurrentContext() else { return }
 
-        context.setStrokeColor(UIColor.red.cgColor)
+        context.setStrokeColor(color.cgColor)
         context.setFillColor(UIColor.clear.cgColor)
 
         // Drawing the corners
