@@ -9,7 +9,7 @@
 import Vision
 import UIKit
 
-let boundingBoxChangeTolerance: CGFloat = 10.0
+let boundingBoxChangeTolerance: CGFloat = 0.5
 
 private enum StateChangeResult {
     case remainedFromLastFrame(previous: PersonInFrame, VNFaceObservation)
@@ -86,10 +86,8 @@ extension CGRect {
         let paths: [KeyPath<CGRect, CGFloat>] = [
             \.origin.x,
             \.origin.y,
-            \.size.width,
-            \.size.height,
         ]
-        let differences = paths.map { self[keyPath: $0] - other[keyPath: $0] }
+        let differences = paths.map { abs(self[keyPath: $0] - other[keyPath: $0]) }
         return differences.reduce(0.0) { $0 + $1 }
     }
     
