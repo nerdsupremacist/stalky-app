@@ -12,6 +12,7 @@
 		0EB58FDD1FBF73FD0095D16F /* PeopleDetectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB58FDC1FBF73FD0095D16F /* PeopleDetectionManager.swift */; };
 		0EB5908D1FBF969E0095D16F /* PersonInFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB5908C1FBF969E0095D16F /* PersonInFrame.swift */; };
 		0EB5908F1FBF9B330095D16F /* Sweeft.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EB5908E1FBF9B330095D16F /* Sweeft.framework */; };
+		C593CFD11FBFAF86003DDF86 /* AimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593CFD01FBFAF86003DDF86 /* AimView.swift */; };
 		C5FB34431FBF6928009295F4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB34421FBF6928009295F4 /* AppDelegate.swift */; };
 		C5FB34451FBF6928009295F4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB34441FBF6928009295F4 /* LoginViewController.swift */; };
 		C5FB344A1FBF6928009295F4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5FB34491FBF6928009295F4 /* Assets.xcassets */; };
@@ -32,6 +33,7 @@
 		0EB58FDC1FBF73FD0095D16F /* PeopleDetectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleDetectionManager.swift; sourceTree = "<group>"; };
 		0EB5908C1FBF969E0095D16F /* PersonInFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonInFrame.swift; sourceTree = "<group>"; };
 		0EB5908E1FBF9B330095D16F /* Sweeft.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sweeft.framework; path = Carthage/Build/iOS/Sweeft.framework; sourceTree = "<group>"; };
+		C593CFD01FBFAF86003DDF86 /* AimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AimView.swift; sourceTree = "<group>"; };
 		C5FB343F1FBF6928009295F4 /* Stalky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stalky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5FB34421FBF6928009295F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5FB34441FBF6928009295F4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 		C593CFCE1FBFAEAC003DDF86 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C593CFD01FBFAF86003DDF86 /* AimView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 				C5FB34451FBF6928009295F4 /* LoginViewController.swift in Sources */,
 				0EB58FD71FBF71CD0095D16F /* Person.swift in Sources */,
 				0EB58FD91FBF72170095D16F /* PeopleViewController.swift in Sources */,
+				C593CFD11FBFAF86003DDF86 /* AimView.swift in Sources */,
 				0EB5908D1FBF969E0095D16F /* PersonInFrame.swift in Sources */,
 				0EB58FDD1FBF73FD0095D16F /* PeopleDetectionManager.swift in Sources */,
 				C5FB34431FBF6928009295F4 /* AppDelegate.swift in Sources */,
