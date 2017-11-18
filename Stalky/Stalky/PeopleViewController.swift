@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import Vision
+import FacebookLogin
 
 class PeopleViewController: UIViewController {
     
@@ -70,6 +71,17 @@ extension PeopleViewController {
         peopleView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         peopleView.layer.setAffineTransform(CGAffineTransform(scaleX: -1, y: -1))
+
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleThreeTaps))
+        gestureRecognizer.numberOfTapsRequired = 3
+        peopleView.addGestureRecognizer(gestureRecognizer)
+    }
+
+    @objc
+    private func handleThreeTaps() {
+        print("Recognized three taps")
+        let loginManager = LoginManager()
+        loginManager.logOut()
     }
     
 }
