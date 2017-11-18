@@ -50,13 +50,13 @@ class PersonInFrame {
             if isFirstAppearance {
                 self.displayView.frame = self.area.scaled(to: superView.bounds.size).with(padding: 150)
                 self.displayView.setNeedsDisplay()
+                UIView.animate(withDuration: 0.1, animations: {
+                    self.displayView.frame = self.area.scaled(to: superView.bounds.size).with(padding: 40)
+                }) { success in
+                    self.alreadyAppeared = true
+                }
             }
-            let duration = isFirstAppearance ? 0.1 : 0.05
-            UIView.animate(withDuration: duration, animations: {
-                self.displayView.frame = self.area.scaled(to: superView.bounds.size).with(padding: 40)
-            }) { success in
-                self.alreadyAppeared = true
-            }
+            self.displayView.frame = self.area.scaled(to: superView.bounds.size).with(padding: 40)
             self.displayView.setNeedsDisplay()
         }
     }

@@ -12,6 +12,7 @@
 		0EB58FDD1FBF73FD0095D16F /* PeopleDetectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB58FDC1FBF73FD0095D16F /* PeopleDetectionManager.swift */; };
 		0EB5908D1FBF969E0095D16F /* PersonInFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB5908C1FBF969E0095D16F /* PersonInFrame.swift */; };
 		0EB5908F1FBF9B330095D16F /* Sweeft.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EB5908E1FBF9B330095D16F /* Sweeft.framework */; };
+		0EB590911FBFD50C0095D16F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB590901FBFD50C0095D16F /* API.swift */; };
 		C593CFD11FBFAF86003DDF86 /* AimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C593CFD01FBFAF86003DDF86 /* AimView.swift */; };
 		C5FB34431FBF6928009295F4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB34421FBF6928009295F4 /* AppDelegate.swift */; };
 		C5FB34451FBF6928009295F4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB34441FBF6928009295F4 /* LoginViewController.swift */; };
@@ -33,6 +34,7 @@
 		0EB58FDC1FBF73FD0095D16F /* PeopleDetectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleDetectionManager.swift; sourceTree = "<group>"; };
 		0EB5908C1FBF969E0095D16F /* PersonInFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonInFrame.swift; sourceTree = "<group>"; };
 		0EB5908E1FBF9B330095D16F /* Sweeft.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sweeft.framework; path = Carthage/Build/iOS/Sweeft.framework; sourceTree = "<group>"; };
+		0EB590901FBFD50C0095D16F /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		C593CFD01FBFAF86003DDF86 /* AimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AimView.swift; sourceTree = "<group>"; };
 		C5FB343F1FBF6928009295F4 /* Stalky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stalky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5FB34421FBF6928009295F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 			children = (
 				0EB58FDC1FBF73FD0095D16F /* PeopleDetectionManager.swift */,
 				0EB58FD61FBF71CD0095D16F /* Person.swift */,
+				0EB590901FBFD50C0095D16F /* API.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 				C593CFD11FBFAF86003DDF86 /* AimView.swift in Sources */,
 				0EB5908D1FBF969E0095D16F /* PersonInFrame.swift in Sources */,
 				0EB58FDD1FBF73FD0095D16F /* PeopleDetectionManager.swift in Sources */,
+				0EB590911FBFD50C0095D16F /* API.swift in Sources */,
 				C5FB34431FBF6928009295F4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -403,7 +407,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DBD8RMSJYE;
+				DEVELOPMENT_TEAM = KJPP698PR3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -411,7 +415,7 @@
 				INFOPLIST_FILE = Stalky/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = de.janapejic.stalky;
+				PRODUCT_BUNDLE_IDENTIFIER = de.tum.hack.Stalky;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -423,7 +427,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DBD8RMSJYE;
+				DEVELOPMENT_TEAM = KJPP698PR3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -431,7 +435,7 @@
 				INFOPLIST_FILE = Stalky/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = de.janapejic.stalky;
+				PRODUCT_BUNDLE_IDENTIFIER = de.tum.hack.Stalky;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

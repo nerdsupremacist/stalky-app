@@ -24,8 +24,17 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: LoginButtonDelegate {
+    
     func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
+        
+        guard case .success = result else {
+            return
+        }
+        
         print("Logged in successfully")
+        StalkyAPI.shared.registerUser().onResult { result in
+            print(result)
+        }
         UIApplication.shared.keyWindow?.rootViewController = PeopleViewController()
     }
 

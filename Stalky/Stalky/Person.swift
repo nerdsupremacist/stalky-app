@@ -16,10 +16,21 @@ struct Person: Codable {
 
 extension Person {
     
-    static func person(in image: CIImage, area: CGRect) -> Response<Person> {
-//        let cropped = image.cropped(to: area.with(padding: 20.0))
-//        guard let data = UIImagePNGRepresentation(.init(ciImage: cropped)) else {
-//            return
+    static func person(in image: CIImage, area: CGRect, using api: StalkyAPI = .shared) -> Response<Person> {
+//        TODO: Uncomment when server is running and we're ready to send images
+//        let area = area.scaled(to: image.extent.size).with(padding: 100.0)
+//        guard let data = image.cropped(to: area).jpeg() else {
+//            return .errored(with: .noData)
+//        }
+//
+//        return api.doDataRequest(to: .find, body: data).flatMap { data in
+//            let jsonDecoder = JSONDecoder()
+//            do {
+//                let result = try jsonDecoder.decode(Person.self, from: data)
+//                return .successful(with: result)
+//            } catch {
+//                return .errored(with: .unknown(error: error))
+//            }
 //        }
         
         let person = Person(name: "John Doe", link: nil)
@@ -35,6 +46,22 @@ extension CGRect {
                       y: max(self.origin.y - padding, 0),
                       width: self.width + 2.0 * padding,
                       height: self.height + 2.0 * padding)
+    }
+    
+}
+
+extension CIImage {
+    
+    func jpeg() -> Data? {
+        guard let eaglContext = EAGLContext(api: .openGLES2) else {
+            return nil
+        }
+        let ciContext = CIContext(eaglContext: eaglContext)
+        guard let outputImageRef = ciContext.createCGImage(self, from: self.extent) else {
+            return nil
+        }
+        let uiImage = UIImage.init(cgImage: outputImageRef, scale: 1.0, orientation: .up)
+        return UIImageJPEGRepresentation(uiImage, 0.9)
     }
     
 }
