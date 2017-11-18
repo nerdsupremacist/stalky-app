@@ -30,7 +30,40 @@ class PersonInFrame {
         self.area = area
         person.onSuccess { person in
             DispatchQueue.main.async {
-                self.displayView.animate(text: person.name)
+                var text = person.name
+
+                if let birthday = person.birthday {
+                    text.append("\n")
+                    text.append("Birthday: \(birthday)")
+                }
+
+                if let dateOfFirstEncounter = person.dateOfFirstEncounter {
+                    text.append("\n")
+                    text.append("Meet on: \(dateOfFirstEncounter)")
+
+                }
+                if let likes = person.likes {
+                    text.append("\n")
+                    text.append("Likes: \(likes.joined(separator: ", "))")
+
+                }
+                if let address = person.address {
+                    text.append("\n")
+                    text.append("Address: \(address)")
+
+                }
+                if let education = person.education {
+                    text.append("\n")
+                    text.append("Education: \(education)")
+
+                }
+                if let employer = person.employer {
+                    text.append("\n")
+                    text.append("Employer: \(employer)")
+
+                }
+
+                self.displayView.animate(text: text)
             }
         }
     }

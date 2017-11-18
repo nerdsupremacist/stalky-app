@@ -11,6 +11,12 @@ import UIKit
 
 struct Person: Codable {
     let name: String
+    let birthday: Date?
+    let dateOfFirstEncounter: Date?
+    let likes: [String]?
+    let address: String?
+    let education: String?
+    let employer: String?
     let link: URL?
 }
 
@@ -32,8 +38,15 @@ extension Person {
 //                return .errored(with: .unknown(error: error))
 //            }
 //        }
-        
-        let person = Person(name: "John Doe", link: nil)
+
+        let person = Person(name: "Mathias Quintero",
+                            birthday: DateComponents(year: 1996, month: 5, day: 29).date,
+                            dateOfFirstEncounter: DateComponents(year: 2015, month: 4, day: 23).date,
+                            likes: ["programming", "alcohol"],
+                            address: "Munich, Germany",
+                            education: "TUM",
+                            employer: "TUM",
+                            link: nil)
         return .successful(with: person)
     }
     
