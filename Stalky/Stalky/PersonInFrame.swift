@@ -28,42 +28,46 @@ class PersonInFrame {
     init(person: Response<Person>, area: CGRect) {
         self.person = person
         self.area = area
-        person.onSuccess { person in
-            DispatchQueue.main.async {
-                var text = "Name: \(person.name)\n"
-
-                if let birthday = person.birthday {
-                    text.append("\n")
-                    text.append("Birthday: \(birthday)")
-                }
-
-                if let dateOfFirstEncounter = person.dateOfFirstEncounter {
-                    text.append("\n")
-                    text.append("Met on: \(dateOfFirstEncounter)")
-
-                }
-                if let likes = person.likes {
-                    text.append("\n")
-                    text.append("Likes: \(likes.joined(separator: ", "))")
-
-                }
-                if let address = person.address {
-                    text.append("\n")
-                    text.append("Address: \(address)")
-
-                }
-                if let education = person.education {
-                    text.append("\n")
-                    text.append("Education: \(education)")
-
-                }
-                if let employer = person.employer {
-                    text.append("\n")
-                    text.append("Employer: \(employer)")
-
-                }
-
-                self.displayView.animate(text: text)
+        person.onSuccess(in: .main) { [weak self] person in
+            
+            var text = "Name: \(person.name)\n"
+            
+            if let birthday = person.birthday {
+                text.append("\n")
+                text.append("Birthday: \(birthday)")
+            }
+            
+            if let dateOfFirstEncounter = person.dateOfFirstEncounter {
+                text.append("\n")
+                text.append("Met on: \(dateOfFirstEncounter)")
+                
+            }
+            if let likes = person.likes {
+                text.append("\n")
+                text.append("Likes: \(likes.joined(separator: ", "))")
+                
+            }
+            if let address = person.address {
+                text.append("\n")
+                text.append("Address: \(address)")
+                
+            }
+            if let education = person.education {
+                text.append("\n")
+                text.append("Education: \(education)")
+                
+            }
+            if let employer = person.employer {
+                text.append("\n")
+                text.append("Employer: \(employer)")
+                
+            }
+            
+            self?.displayView.animate(text: text)
+        }
+        .onError { error in
+            if case .invalidStatus(_, let data) = error {
+                print(data!.string!)
             }
         }
     }
@@ -74,6 +78,7 @@ class PersonInFrame {
     
     deinit {
         let view = displayView
+        person.cancel()
         DispatchQueue.main >>> {
             guard view.superview != nil else { return }
             view.removeFromSuperview()

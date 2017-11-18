@@ -54,31 +54,42 @@ struct Person: Codable {
 extension Person {
     
     static func person(in image: CIImage, area: CGRect, using api: StalkyAPI = .shared) -> Response<Person> {
-//        TODO: Uncomment when server is running and we're ready to send images
-//        let area = area.scaled(to: image.extent.size).with(padding: 100.0)
-//        guard let data = image.cropped(to: area).jpeg() else {
-//            return .errored(with: .noData)
-//        }
-//
-//        return api.doDataRequest(to: .find, body: data).flatMap { data in
-//            let jsonDecoder = JSONDecoder()
-//            do {
-//                let result = try jsonDecoder.decode(Person.self, from: data)
-//                return .successful(with: result)
-//            } catch {
-//                return .errored(with: .unknown(error: error))
-//            }
-//        }
 
-        let person = Person(name: "Jana Pejić",
-                            birthday: Calendar(identifier: .gregorian).date(from: DateComponents(year: 1991, month: 3, day: 14)),
-                            dateOfFirstEncounter: Calendar(identifier: .gregorian).date(from: DateComponents(year: 2015, month: 4, day: 23)),
-                            likes: ["programming", "dancing"],
-                            address: "Munich, Germany",
-                            education: "TUM",
-                            employer: "NSA, CIA, FBI",
-                            link: nil)
-        return .successful(with: person)
+        return async {
+            let area = area.scaled(to: image.extent.size).with(padding: 100.0)
+            guard let data = image.cropped(to: area).jpeg() else {
+                throw APIError.noData
+            }
+            
+            let name = "\(UUID().uuidString).jpg"
+            
+            let file = File(data: data, name: name, mimeType: "application/octet-stream")
+            return MultiformData(parameters: [:], boundary: UUID().uuidString, files: [file])
+        }.flatMap { (body: MultiformData) in
+            return api.doRepresentedRequest(with: .post,
+                                            to: .identify,
+                                            body: body).map { (data: Data) in
+                    
+                    return Person(name: "Jana Pejić",
+                                  birthday: Calendar(identifier: .gregorian).date(from: DateComponents(year: 1991, month: 3, day: 14)),
+                                  dateOfFirstEncounter: Calendar(identifier: .gregorian).date(from: DateComponents(year: 2015, month: 4, day: 23)),
+                                  likes: ["programming", "dancing"],
+                                  address: "Munich, Germany",
+                                  education: "TUM",
+                                  employer: "NSA, CIA, FBI",
+                                  link: nil)
+                    
+//                    let jsonDecoder = JSONDecoder()
+//                    do {
+//                        let result = try jsonDecoder.decode(Person.self, from: data)
+//                        return .successful(with: result)
+//                    } catch {
+//                        return .errored(with: .unknown(error: error))
+//                    }
+                }
+        }
+        
+//        return .successful(with: person)
     }
     
 }
