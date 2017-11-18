@@ -25,6 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             rootViewController = LoginViewController()
         } else {
             // Already logged in
+            StalkyAPI.shared.registerUser().onResult { result in
+                print(result)
+            }
             rootViewController = PeopleViewController()
         }
 
