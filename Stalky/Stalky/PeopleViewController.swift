@@ -129,8 +129,11 @@ extension PeopleViewController: PeopleDetectionManagerDelegate {
     
     func manager(_ manager: PeopleDetectionManager, didUpdate people: [PersonInFrame]) {
         people.filter({ $0.displayView.superview == nil }).forEach { person in
+            
+            // MARK: - First appearence
+            
             self.view.addSubview(person.displayView)
-            person.updateFrame()
+            person.updateFrame(isFirstAppearance: true)
         }
     }
     
