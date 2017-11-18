@@ -10,7 +10,15 @@ import UIKit
 
 class AimView: UIView {
 
-    var color: UIColor = .red {
+    enum Color {
+        case red
+        case green
+        case blue
+        case yellow
+        case white
+    }
+
+    var color: Color = .red {
         didSet {
             setNeedsDisplay()
         }
@@ -95,4 +103,23 @@ class AimView: UIView {
         context.drawPath(using: .stroke)
     }
 
+}
+
+extension AimView.Color {
+    var cgColor: CGColor {
+        let color: UIColor
+        switch self {
+        case .red:
+            color = .red
+        case .green:
+            color = .green
+        case .blue:
+            color = .blue
+        case .yellow:
+            color = .yellow
+        case .white:
+            color = .white
+        }
+        return color.cgColor
+    }
 }
