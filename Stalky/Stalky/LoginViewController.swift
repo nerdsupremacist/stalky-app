@@ -25,6 +25,7 @@ class LoginViewController: UIViewController {
         // Background
         let imageView = UIImageView(image: UIImage(named: "background")!)
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
         view.addSubview(imageView)
         imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
