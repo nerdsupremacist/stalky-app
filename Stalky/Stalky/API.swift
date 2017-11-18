@@ -62,21 +62,52 @@ extension Data {
     
 }
 
-struct FacebookAuth {
+class FacebookAuth {
     let accessToken: AccessToken
+    
+    lazy var id: Response<String> = {
+        return .new { setter in
+            let connection = GraphRequestConnection()
+            connection.add(GraphRequest(graphPath: "/me")) { httpResponse, result in
+                switch result {
+                    
+                case .success(let response):
+                    print(response)
+                    if let id = response.dictionaryValue?["id"] as? String {
+                        setter.success(with: id)
+                    } else {
+                        setter.error(with: .noData)
+                    }
+                    
+                case .failed(let error):
+                    setter.error(with: .unknown(error: error))
+                    
+                }
+            }
+            connection.start()
+        }
+    }()
+    
+    init(accessToken: AccessToken) {
+        self.accessToken = accessToken
+    }
 }
 
 extension FacebookAuth: Auth {
     
     func apply(to request: URLRequest) -> Promise<URLRequest, APIError> {
-        var request = request
-        request.addValue(accessToken.authenticationToken, forHTTPHeaderField: "Authorization")
-        return .successful(with: request)
+        return id.map { (id: String) in
+            let url = request.url.map { $0.appendingQuery(key: "id", value: id) }
+            var request = request
+            request.url = url
+            request.addValue(self.accessToken.authenticationToken, forHTTPHeaderField: "Authorization")
+            return request
+        }
     }
     
 }
 
-struct StalkyAPI: API {
+class StalkyAPI: API {
     
     enum Endpoint: String, APIEndpoint {
         case user
@@ -87,13 +118,17 @@ struct StalkyAPI: API {
         return .init(baseURL: "http://165.227.130.27/api")
     }
     
-    let baseURL: String
-    
-    var auth: Auth {
+    lazy var auth: Auth = {
         guard let accessToken = AccessToken.current else {
             return NoAuth.standard
         }
         return FacebookAuth(accessToken: accessToken)
+    }()
+    
+    let baseURL: String
+    
+    init(baseURL: String) {
+        self.baseURL = baseURL
     }
     
     var baseQueries: [String : String] {
