@@ -62,6 +62,7 @@ class LoginViewController: UIViewController {
             .userAboutMe,
             .userBirthday,
             .userEducationHistory,
+            .userWorkHistory,
             .userFriends,
             .userPhotos,
         ])
