@@ -39,6 +39,8 @@ class PersonInFrame {
         
         person.onSuccess(in: .main) { [weak self] person in
             
+            self?.displayView.color = .green
+            
             var text = "Name: \(person.name)\n"
             
             if let birthday = person.birthday {
@@ -74,7 +76,10 @@ class PersonInFrame {
             
             self?.displayView.animate(text: text)
         }
-        .onError { error in
+        .onError(in: .main) { [weak self] error in
+            
+            self?.displayView.color = .white
+            
             print("Error: \(error)")
             if case .invalidStatus(_, let data) = error {
                 print(data!.string!)
