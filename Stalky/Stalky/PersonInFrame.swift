@@ -44,36 +44,36 @@ class PersonInFrame {
             
             var text = "Name: \(person.name)\n"
             
-            if let birthday = person.birthday {
+            if let birthday = person.details.birthday?.string(using: "dd.MM.YYYY") {
                 text.append("\n")
                 text.append("Birthday: \(birthday)")
             }
             
-            if let dateOfFirstEncounter = person.dateOfFirstEncounter {
-                text.append("\n")
-                text.append("Met on: \(dateOfFirstEncounter)")
-                
-            }
-            if let likes = person.likes {
-                text.append("\n")
-                text.append("Likes: \(likes.joined(separator: ", "))")
-                
-            }
-            if let address = person.address {
-                text.append("\n")
-                text.append("Address: \(address)")
-                
-            }
-            if let education = person.education {
+//            if let dateOfFirstEncounter = person.dateOfFirstEncounter {
+//                text.append("\n")
+//                text.append("Met on: \(dateOfFirstEncounter)")
+//
+//            }
+//            if let likes = person.likes {
+//                text.append("\n")
+//                text.append("Likes: \(likes.joined(separator: ", "))")
+//            }
+//            if let address = person.address {
+//                text.append("\n")
+//                text.append("Address: \(address)")
+//
+//            }
+            
+            if let education = person.details.education?.last?.school.name {
                 text.append("\n")
                 text.append("Education: \(education)")
                 
             }
-            if let employer = person.employer {
-                text.append("\n")
-                text.append("Employer: \(employer)")
-                
-            }
+//            if let employer = person.employer {
+//                text.append("\n")
+//                text.append("Employer: \(employer)")
+//
+//            }
             
             self?.displayView.animate(text: text)
         }

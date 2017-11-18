@@ -10,45 +10,38 @@ import Sweeft
 import UIKit
 
 struct Person: Codable {
-    let name: String
-    let birthday: String?
-    let dateOfFirstEncounter: String?
-    let likes: [String]?
-    let address: String?
-    let education: String?
-    let employer: String?
-    let link: URL?
-
-    init(name: String,
-         birthday: Date? = nil,
-         dateOfFirstEncounter: Date? = nil,
-         likes: [String]? = nil,
-         address: String? = nil,
-         education: String? = nil,
-         employer: String? = nil,
-         link: URL? = nil) {
-
-        self.name = name
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.YYYY"
-        if let birthday = birthday {
-            self.birthday = dateFormatter.string(from: birthday)
-        } else {
-            self.birthday = nil
+    
+    struct Details: Codable {
+        
+        struct EducationEntry: Codable {
+            
+            struct School: Codable {
+                let id: String
+                let name: String
+            }
+            
+            struct Concentration: Codable {
+                let id: String
+                let name: String
+            }
+            
+            let id: String
+            let type: String
+            let concentration: [Concentration]?
+            let school: School
         }
-        if let dateOfFirstEncounter = dateOfFirstEncounter {
-            self.dateOfFirstEncounter = dateFormatter.string(from: dateOfFirstEncounter)
-        } else {
-            self.dateOfFirstEncounter = nil
-        }
-
-        self.likes = likes
-        self.address = address
-        self.education = education
-        self.employer = employer
-        self.link = link
+        
+        let birthday: Date?
+        let education: [EducationEntry]?
     }
+    
+    enum CodingKeys: String, CodingKey {
+        case name = "Friend Name"
+        case details = "Friend Info"
+    }
+    
+    let name: String
+    let details: Details
 }
 
 extension Person {
@@ -63,10 +56,6 @@ extension Person {
             }
             
             let name = "\(UUID().uuidString).jpg"
-            
-            let url = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
-            try data.write(to: url.appendingPathComponent(name))
-            
             let file = File(data: data, name: name, mimeType: "application/octet-stream")
             return MultiformData(parameters: [:], boundary: UUID().uuidString, files: [file])
         }.flatMap { (body: MultiformData) in
@@ -80,24 +69,17 @@ extension Person {
             return api.doRepresentedRequest(with: .post,
                                             to: .identify,
                                             queries: queries,
-                                            body: body).map { (data: Data) in
+                                            body: body).flatMap { (data: Data) in
                     print(data.string!)
-                    return Person(name: "Jana Pejić",
-                                  birthday: Calendar(identifier: .gregorian).date(from: DateComponents(year: 1991, month: 3, day: 14)),
-                                  dateOfFirstEncounter: Calendar(identifier: .gregorian).date(from: DateComponents(year: 2015, month: 4, day: 23)),
-                                  likes: ["programming", "dancing"],
-                                  address: "Munich, Germany",
-                                  education: "TUM",
-                                  employer: "NSA, CIA, FBI",
-                                  link: nil)
-                    
-//                    let jsonDecoder = JSONDecoder()
-//                    do {
-//                        let result = try jsonDecoder.decode(Person.self, from: data)
-//                        return .successful(with: result)
-//                    } catch {
-//                        return .errored(with: .unknown(error: error))
-//                    }
+                    return async {
+                        
+                        let jsonDecoder = JSONDecoder()
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.calendar = Calendar(identifier: .gregorian)
+                        dateFormatter.dateFormat = "MM/dd/yyyy"
+                        jsonDecoder.dateDecodingStrategy = .formatted(dateFormatter)
+                        return try jsonDecoder.decode(Person.self, from: data)
+                    }
                 }
         }
     }
