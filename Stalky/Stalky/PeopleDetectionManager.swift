@@ -57,7 +57,7 @@ class PeopleDetectionManager {
     }
     
     func updated(with image: CIImage) {
-        try? faceDetectionRequest.perform([faceDetection], on: image)
+        try? faceDetectionRequest.perform([faceDetection], on: image, orientation: .leftMirrored)
         let results = faceDetection.results?.flatMap { $0 as? VNFaceObservation } ?? []
         let changes = stateChanges(from: results)
         self.people = changes.map { $0.person(in: image) }

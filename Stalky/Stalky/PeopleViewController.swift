@@ -13,6 +13,7 @@ import Vision
 class PeopleViewController: UIViewController {
     
     var session: AVCaptureSession?
+    var peopleView = UIView()
     
     lazy var detectionManager: PeopleDetectionManager = {
         return PeopleDetectionManager(delegate: self)
@@ -59,23 +60,16 @@ extension PeopleViewController {
         super.viewDidAppear(animated)
         guard let previewLayer = previewLayer else { return }
         view.layer.addSublayer(previewLayer)
-    }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
         
-        switch UIDevice.current.orientation {
-        case .landscapeRight:
-            previewLayer?.connection?.videoOrientation = .landscapeLeft
-        case .landscapeLeft:
-            previewLayer?.connection?.videoOrientation = .landscapeRight
-        case .portrait:
-            previewLayer?.connection?.videoOrientation = .portrait
-        case .portraitUpsideDown:
-            previewLayer?.connection?.videoOrientation = .portraitUpsideDown
-        case .unknown, .faceUp, .faceDown:
-            previewLayer?.connection?.videoOrientation = .portrait
-        }
+        
+        peopleView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(peopleView)
+        peopleView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        peopleView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        peopleView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        peopleView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        peopleView.layer.setAffineTransform(CGAffineTransform(scaleX: -1, y: -1))
     }
     
 }
@@ -115,24 +109,6 @@ extension PeopleViewController {
     
 }
 
-extension UIDeviceOrientation {
-    
-    var exifOrientation: Int32 {
-        switch self {
-        case .portrait:
-            return Int32(UIImageOrientation.leftMirrored.rawValue)
-        case .landscapeRight:
-            return Int32(UIImageOrientation.upMirrored.rawValue)
-        case .landscapeLeft:
-            return Int32(UIImageOrientation.up.rawValue)
-        default:
-            return Int32(UIImageOrientation.leftMirrored.rawValue)
-        }
-    }
-    
-    
-}
-
 // MARK: - Image Capture
 
 extension PeopleViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
@@ -146,12 +122,7 @@ extension PeopleViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         let attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault, sampleBuffer, kCMAttachmentMode_ShouldPropagate)
         let ciImage = CIImage(cvImageBuffer: pixelBuffer!, options: attachments as! [String : Any]?)
         
-        // leftMirrored for front camera
-        let ciImageWithOrientation = DispatchQueue.main.sync {
-            return ciImage.oriented(forExifOrientation: UIDevice.current.orientation.exifOrientation)
-        }
-        
-        detectionManager.updated(with: ciImageWithOrientation)
+        detectionManager.updated(with: ciImage)
     }
     
 }
@@ -163,7 +134,8 @@ extension PeopleViewController: PeopleDetectionManagerDelegate {
             
             // MARK: - First appearence
             
-            self.view.addSubview(person.displayView)
+            self.peopleView.addSubview(person.displayView)
+            person.displayView.layer.setAffineTransform(CGAffineTransform(scaleX: -1, y: -1))
             person.updateFrame(isFirstAppearance: true)
         }
     }

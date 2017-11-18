@@ -12,7 +12,7 @@ import Sweeft
 class PersonInFrame {
     
     let person: Response<Person>
-    var isAnimatingMovement = true
+    var isAnimatingMovement = false
     private(set) var area: CGRect {
         didSet {
             updateFrame()
