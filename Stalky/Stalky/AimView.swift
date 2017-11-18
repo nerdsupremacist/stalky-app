@@ -11,6 +11,7 @@ import UIKit
 class AimView: UIView {
 
     private let infoLabel = UILabel()
+    private let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
     private var blurViewWidthConstraint: NSLayoutConstraint!
     private var blurViewHeightConstraint: NSLayoutConstraint!
 
@@ -25,6 +26,7 @@ class AimView: UIView {
     var color: Color = .red {
         didSet {
             setNeedsDisplay()
+            updateActivityIndicatorColor()
         }
     }
 
@@ -77,6 +79,26 @@ class AimView: UIView {
         infoLabel.leadingAnchor.constraint(equalTo: blurView.leadingAnchor, constant: 10).isActive = true
         infoLabel.trailingAnchor.constraint(equalTo: blurView.trailingAnchor, constant: -10).isActive = true
         infoLabel.topAnchor.constraint(equalTo: blurView.topAnchor, constant: 10).isActive = true
+
+        // Activity indicator
+
+        updateActivityIndicatorColor()
+        activityIndicator.alpha = 0.5
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(activityIndicator)
+        activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+
+    }
+
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+
+        activityIndicator.startAnimating()
+    }
+
+    private func updateActivityIndicatorColor() {
+        activityIndicator.color = color.uiColor
     }
 
     func animate(text: String) {
@@ -172,23 +194,35 @@ class AimView: UIView {
         context.drawPath(using: .stroke)
     }
 
+    func startProgress() {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+    }
+
+    func stopProgress() {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
+    }
+
 }
 
 extension AimView.Color {
     var cgColor: CGColor {
-        let color: UIColor
+        return uiColor.cgColor
+    }
+
+    var uiColor: UIColor {
         switch self {
         case .red:
-            color = .red
+            return .red
         case .green:
-            color = .green
+            return .green
         case .blue:
-            color = .blue
+            return .blue
         case .yellow:
-            color = .yellow
+            return .yellow
         case .white:
-            color = .white
+            return .white
         }
-        return color.cgColor
     }
 }

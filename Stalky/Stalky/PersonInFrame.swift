@@ -40,6 +40,7 @@ class PersonInFrame {
         person.onSuccess(in: .main) { [weak self] person in
             
             self?.displayView.color = .green
+            self?.displayView.stopProgress()
             
             var text = "Name: \(person.name)\n"
             
@@ -79,6 +80,7 @@ class PersonInFrame {
         .onError(in: .main) { [weak self] error in
             
             self?.displayView.color = .white
+            self?.displayView.stopProgress()
             
             print("Error: \(error)")
             if case .invalidStatus(_, let data) = error {
