@@ -18,44 +18,52 @@ class LoginViewController: UIViewController {
 
         view.backgroundColor = .white
 
-        let loginButton = LoginButton(readPermissions: [.publicProfile, .userFriends])
-        loginButton.center = view.center
-        loginButton.delegate = self
-        view.addSubview(loginButton)
-
-        printText()
+        setupSubviewa()
     }
 
-    private func printText() {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "CourierNewPS-BoldMT", size: 40)
-        label.textColor = .red
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        view.addSubview(label)
-        label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        label.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -80).isActive = true
-        label.animate(text: "Welcome to\nStalky", delay: 0.1, mainColor: .red, intermediateColor: .white)
+    private func setupSubviewa() {
+        // Login button
+        let loginButton = LoginButton(readPermissions: [.publicProfile, .userFriends])
+        loginButton.delegate = self
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(loginButton)
+        loginButton.widthAnchor.constraint(equalToConstant: 250).isActive = true
+        loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loginButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 140).isActive = true
 
-        let about = UILabel()
-        about.text = "Icons provided by\nhttps://icons8.com/"
-        about.translatesAutoresizingMaskIntoConstraints = false
-        about.font = UIFont(name: "CourierNewPSMT", size: 20)
-        about.textColor = .red
-        about.numberOfLines = 0
-        about.textAlignment = .center
-        view.addSubview(about)
-        about.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        about.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        // Title label
+        let titleLabel = UILabel()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.font = UIFont(name: "CourierNewPS-BoldMT", size: 40)
+        titleLabel.textColor = .red
+        titleLabel.numberOfLines = 0
+        titleLabel.textAlignment = .center
+        view.addSubview(titleLabel)
+        titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        titleLabel.animate(text: "Welcome to\nStalky", delay: 0.1, mainColor: .red, intermediateColor: .white)
 
+        // About label
+        let aboutLabel = UILabel()
+        aboutLabel.text = "Icons provided by\nhttps://icons8.com/"
+        aboutLabel.translatesAutoresizingMaskIntoConstraints = false
+        aboutLabel.font = UIFont(name: "CourierNewPSMT", size: 20)
+        aboutLabel.textColor = .red
+        aboutLabel.numberOfLines = 0
+        aboutLabel.textAlignment = .center
+        view.addSubview(aboutLabel)
+        aboutLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        aboutLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+
+        // Aim
         aim.translatesAutoresizingMaskIntoConstraints = false
         aim.backgroundColor = .clear
         view.addSubview(aim)
         aim.heightAnchor.constraint(equalToConstant: 120).isActive = true
         aim.widthAnchor.constraint(equalToConstant: 120).isActive = true
-        aim.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 70).isActive = true
-        aim.centerXAnchor.constraint(equalTo: label.centerXAnchor).isActive = true
+        aim.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
+        aim.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor).isActive = true
     }
 
     override func viewDidAppear(_ animated: Bool) {
