@@ -56,8 +56,8 @@ extension Person {
     static func person(in image: CIImage, area: CGRect, using api: StalkyAPI = .shared) -> Response<Person> {
 
         return async {
-            let area = area.scaled(to: image.extent.size).with(padding: 100.0)
-            guard let data = image.cropped(to: area).oriented(forExifOrientation: Int32(CGImagePropertyOrientation.leftMirrored.rawValue)).jpeg() else {
+            let area = area.scaled(to: image.extent.size)
+            guard let data = image.oriented(forExifOrientation: Int32(CGImagePropertyOrientation.leftMirrored.rawValue)).jpeg() else {
                 
                 throw APIError.noData
             }
@@ -68,12 +68,18 @@ extension Person {
             try data.write(to: url.appendingPathComponent(name))
             
             let file = File(data: data, name: name, mimeType: "application/octet-stream")
-            return MultiformData(parameters: [:], boundary: UUID().uuidString, files: [file])
+            let parameters = [
+                "x": area.origin.x.description,
+                "y": area.origin.y.description,
+                "width": area.width.description,
+                "height": area.height.description,
+            ]
+            return MultiformData(parameters: parameters, boundary: UUID().uuidString, files: [file])
         }.flatMap { (body: MultiformData) in
             return api.doRepresentedRequest(with: .post,
                                             to: .identify,
                                             body: body).map { (data: Data) in
-                    
+                    print(data.string!)
                     return Person(name: "Jana Pejić",
                                   birthday: Calendar(identifier: .gregorian).date(from: DateComponents(year: 1991, month: 3, day: 14)),
                                   dateOfFirstEncounter: Calendar(identifier: .gregorian).date(from: DateComponents(year: 2015, month: 4, day: 23)),
@@ -117,8 +123,8 @@ extension CIImage {
         guard let outputImageRef = ciContext.createCGImage(self, from: self.extent) else {
             return nil
         }
-        let uiImage = UIImage.init(cgImage: outputImageRef, scale: 1.0, orientation: .up)
-        return UIImageJPEGRepresentation(uiImage, 0.9)
+        let uiImage = UIImage.init(cgImage: outputImageRef, scale: 0.5, orientation: .up)
+        return UIImageJPEGRepresentation(uiImage, 0.5)
     }
     
 }

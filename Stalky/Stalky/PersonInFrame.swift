@@ -75,6 +75,7 @@ class PersonInFrame {
             self?.displayView.animate(text: text)
         }
         .onError { error in
+            print("Error: \(error)")
             if case .invalidStatus(_, let data) = error {
                 print(data!.string!)
             }
