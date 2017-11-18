@@ -55,8 +55,8 @@ extension Person {
     
     static func person(in image: CIImage, area: CGRect, using api: StalkyAPI = .shared) -> Response<Person> {
 
+        let area = area.scaled(to: image.extent.size)
         return async {
-            let area = area.scaled(to: image.extent.size)
             guard let data = image.oriented(forExifOrientation: Int32(CGImagePropertyOrientation.leftMirrored.rawValue)).jpeg() else {
                 
                 throw APIError.noData
@@ -68,16 +68,18 @@ extension Person {
             try data.write(to: url.appendingPathComponent(name))
             
             let file = File(data: data, name: name, mimeType: "application/octet-stream")
-            let parameters = [
-                "x": area.origin.x.description,
-                "y": area.origin.y.description,
-                "width": area.width.description,
-                "height": area.height.description,
-            ]
-            return MultiformData(parameters: parameters, boundary: UUID().uuidString, files: [file])
+            return MultiformData(parameters: [:], boundary: UUID().uuidString, files: [file])
         }.flatMap { (body: MultiformData) in
+            
+            let queries = [
+                "x": area.origin.x,
+                "y": area.origin.y,
+                "width": area.width,
+                "height": area.height,
+            ]
             return api.doRepresentedRequest(with: .post,
                                             to: .identify,
+                                            queries: queries,
                                             body: body).map { (data: Data) in
                     print(data.string!)
                     return Person(name: "Jana Pejić",
