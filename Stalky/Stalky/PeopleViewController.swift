@@ -64,16 +64,16 @@ extension PeopleViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
-        switch UIApplication.shared.statusBarOrientation {
-        case .landscapeLeft:
-            previewLayer?.connection?.videoOrientation = .landscapeLeft
+        switch UIDevice.current.orientation {
         case .landscapeRight:
+            previewLayer?.connection?.videoOrientation = .landscapeLeft
+        case .landscapeLeft:
             previewLayer?.connection?.videoOrientation = .landscapeRight
         case .portrait:
             previewLayer?.connection?.videoOrientation = .portrait
         case .portraitUpsideDown:
             previewLayer?.connection?.videoOrientation = .portraitUpsideDown
-        case .unknown:
+        case .unknown, .faceUp, .faceDown:
             previewLayer?.connection?.videoOrientation = .portrait
         }
     }
@@ -115,7 +115,7 @@ extension PeopleViewController {
     
 }
 
-extension UIInterfaceOrientation {
+extension UIDeviceOrientation {
     
     var exifOrientation: Int32 {
         switch self {
@@ -148,7 +148,7 @@ extension PeopleViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         
         // leftMirrored for front camera
         let ciImageWithOrientation = DispatchQueue.main.sync {
-            return ciImage.oriented(forExifOrientation: UIApplication.shared.statusBarOrientation.exifOrientation)
+            return ciImage.oriented(forExifOrientation: UIDevice.current.orientation.exifOrientation)
         }
         
         detectionManager.updated(with: ciImageWithOrientation)
