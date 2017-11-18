@@ -91,7 +91,7 @@ class AimView: UIView {
         blurViewWidthConstraint.constant = expectedLabelSize.width + 30
         blurViewHeightConstraint.constant = expectedLabelSize.height + 30
 
-        infoLabel.animate(text: text, delay: 0.1)
+        infoLabel.animate(text: text, delay: 0.1, mainColor: .white, intermediateColor: .clear)
     }
 
     override func draw(_ rect: CGRect) {

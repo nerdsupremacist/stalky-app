@@ -10,25 +10,25 @@ import UIKit
 
 extension UILabel {
 
-    func animate(text: String, delay: TimeInterval) {
+    func animate(text: String, delay: TimeInterval, mainColor: UIColor, intermediateColor: UIColor) {
         guard let character = text.first else {
             guard let labelText = self.text else { return }
-            self.animateCursor(text: labelText, delay: delay)
+            self.animateCursor(text: labelText, delay: delay, mainColor: mainColor, intermediateColor: intermediateColor)
             return
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             self.text = (self.text?.dropLast() ?? "").appending(String(character)).appending("_")
-            self.animate(text: String(text.dropFirst()), delay: delay)
+            self.animate(text: String(text.dropFirst()), delay: delay, mainColor: mainColor, intermediateColor: intermediateColor)
         }
     }
 
-    func animateCursor(text: String, delay: TimeInterval) {
+    func animateCursor(text: String, delay: TimeInterval, mainColor: UIColor, intermediateColor: UIColor) {
         // Animate cursor blinking
         let attributedString = NSMutableAttributedString(string: text)
         let rangeOfUnderScore = (text as NSString).range(of: "_")
         attributedString.addAttribute(.foregroundColor,
-                                      value: UIColor.clear,
+                                      value: intermediateColor,
                                       range: rangeOfUnderScore)
         self.attributedText = attributedString
 
@@ -36,7 +36,7 @@ extension UILabel {
             let attributedString = NSMutableAttributedString(string: text)
             let rangeOfUnderScore = (text as NSString).range(of: "_")
             attributedString.addAttribute(.foregroundColor,
-                                          value: UIColor.white,
+                                          value: mainColor,
                                           range: rangeOfUnderScore)
             self.attributedText = attributedString
         }
