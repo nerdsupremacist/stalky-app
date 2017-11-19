@@ -10,20 +10,30 @@ import UIKit
 
 extension UILabel {
 
-    func animate(text: String, delay: TimeInterval, mainColor: UIColor, intermediateColor: UIColor) {
+    typealias CompletionHandler = () -> ()
+
+    func animate(text: String, delay: TimeInterval, mainColor: UIColor, intermediateColor: UIColor, completion: CompletionHandler? = nil) {
         guard let character = text.first else {
             guard let labelText = self.text else { return }
-            self.animateCursor(text: labelText, delay: delay, mainColor: mainColor, intermediateColor: intermediateColor)
+            self.animateCursor(text: labelText,
+                               delay: delay,
+                               mainColor: mainColor,
+                               intermediateColor: intermediateColor,
+                               completion: completion)
             return
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             self.text = (self.text?.dropLast() ?? "").appending(String(character)).appending("_")
-            self.animate(text: String(text.dropFirst()), delay: delay, mainColor: mainColor, intermediateColor: intermediateColor)
+            self.animate(text: String(text.dropFirst()),
+                         delay: delay,
+                         mainColor: mainColor,
+                         intermediateColor: intermediateColor,
+                         completion: completion)
         }
     }
 
-    func animateCursor(text: String, delay: TimeInterval, mainColor: UIColor, intermediateColor: UIColor) {
+    func animateCursor(text: String, delay: TimeInterval, mainColor: UIColor, intermediateColor: UIColor, completion: CompletionHandler? = nil) {
         // Animate cursor blinking
         let attributedString = NSMutableAttributedString(string: text)
         let rangeOfUnderScore = (text as NSString).range(of: "_")
@@ -39,6 +49,8 @@ extension UILabel {
                                           value: mainColor,
                                           range: rangeOfUnderScore)
             self.attributedText = attributedString
+
+            completion?()
         }
 
     }
