@@ -66,9 +66,7 @@ extension Person {
     
     static func person(in image: CIImage, area: CGRect, using api: StalkyAPI = .shared) -> Response<Person> {
 
-        let area = area.translating(by: .init(dx: 1.0, dy: 1.0))
-                       .scaled(to: .init(width: 0.5, height: 0.5))
-                       .scaled(to: image.extent.size)
+        let area = area.scaled(to: image.extent.size.flipped())
         
         return async {
             guard let data = image.oriented(forExifOrientation: Int32(CGImagePropertyOrientation.leftMirrored.rawValue)).jpeg() else {
@@ -87,12 +85,10 @@ extension Person {
             
             let queries = [
                 "x": area.origin.x,
-                "y": area.origin.y,
+                "y": image.extent.size.width - area.origin.y,
                 "width": area.width,
                 "height": area.height,
             ]
-            
-            print(queries)
             
             return api.doRepresentedRequest(with: .post,
                                             to: .identify,
@@ -128,6 +124,15 @@ extension CGRect {
                       y: max(self.origin.y - padding, 0),
                       width: self.width + 2.0 * padding,
                       height: self.height + 2.0 * padding)
+    }
+    
+}
+
+extension CGSize {
+    
+    func flipped() -> CGSize {
+        return CGSize(width: height,
+                      height: width)
     }
     
 }
