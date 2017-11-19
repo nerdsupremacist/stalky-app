@@ -31,8 +31,14 @@ struct Person: Codable {
             let school: School
         }
         
+        struct MutualEventEntry: Codable {
+            let id: String
+            let name: String
+        }
+        
         let birthday: Date?
         let education: [EducationEntry]?
+        let mutual_events: [MutualEventEntry]?
     }
     
     enum CodingKeys: String, CodingKey {
@@ -48,14 +54,21 @@ extension Person {
     
     static func person(in image: CIImage, area: CGRect, using api: StalkyAPI = .shared) -> Response<Person> {
 
-        let area = area.scaled(to: image.extent.size)
+        let area = area.translating(by: .init(dx: 1.0, dy: 1.0))
+                       .scaled(to: .init(width: 0.5, height: 0.5))
+                       .scaled(to: image.extent.size)
+        
         return async {
             guard let data = image.oriented(forExifOrientation: Int32(CGImagePropertyOrientation.leftMirrored.rawValue)).jpeg() else {
                 
                 throw APIError.noData
             }
             
+            
             let name = "\(UUID().uuidString).jpg"
+            let url = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+            try data.write(to: url.appendingPathComponent(name))
+            
             let file = File(data: data, name: name, mimeType: "application/octet-stream")
             return MultiformData(parameters: [:], boundary: UUID().uuidString, files: [file])
         }.flatMap { (body: MultiformData) in
@@ -66,6 +79,9 @@ extension Person {
                 "width": area.width,
                 "height": area.height,
             ]
+            
+            print(queries)
+            
             return api.doRepresentedRequest(with: .post,
                                             to: .identify,
                                             queries: queries,
@@ -87,6 +103,13 @@ extension Person {
 }
 
 extension CGRect {
+    
+    func translating(by vector: CGVector) -> CGRect {
+        return CGRect(x: origin.x + vector.dx,
+                      y: origin.y + vector.dy,
+                      width: width,
+                      height: height)
+    }
     
     func with(padding: CGFloat) -> CGRect {
         return CGRect(x: max(self.origin.x - padding, 0),
