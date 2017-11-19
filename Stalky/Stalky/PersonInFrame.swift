@@ -26,6 +26,7 @@ class PersonInFrame {
     lazy private(set) var displayView: AimView = {
         let view = AimView()
         view.backgroundColor = .clear
+        view.startProgress()
         return view
     }()
     

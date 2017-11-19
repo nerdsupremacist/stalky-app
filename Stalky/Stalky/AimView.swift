@@ -91,11 +91,6 @@ class AimView: UIView {
 
     }
 
-    override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-
-        activityIndicator.startAnimating()
-    }
 
     private func updateActivityIndicatorColor() {
         activityIndicator.color = color.uiColor
