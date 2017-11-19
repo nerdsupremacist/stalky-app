@@ -45,103 +45,48 @@ class PersonInFrame {
 
             let name = "Name: \(person.name)\n"
 
-            var additionalInfo: [String] = []
             var subadditionalInfo: [String] = []
 
             if let birthday = person.details.birthday {
                 subadditionalInfo.append("Birthday: \(birthday)")
-                if subadditionalInfo.count == 3 {
-                    additionalInfo.append(subadditionalInfo.joined(separator: "\n"))
-                    subadditionalInfo = []
-                }
             }
             
             if let education = person.details.education?.last?.school.name {
                 subadditionalInfo.append("Education: \(education)")
-                if subadditionalInfo.count == 3 {
-                    additionalInfo.append(subadditionalInfo.joined(separator: "\n"))
-                    subadditionalInfo = []
-                }
             }
 
             if let mutualEvents = person.details.mutualEvents {
-                var mutualEventsString = ""
-                for i in 0..<min(mutualEvents.count, 3) {
-                    if mutualEventsString.isEmpty {
-                        mutualEventsString.append(mutualEvents[i].name)
-                    } else {
-                        mutualEventsString.append(", \(mutualEvents[i].name)")
-                    }
-                }
+                let mutualEventsString = mutualEvents.array(withFirst: 3).map { $0.name }.joined(separator: ", ")
                 subadditionalInfo.append("Events: \(mutualEventsString)")
-                if subadditionalInfo.count == 3 {
-                    additionalInfo.append(subadditionalInfo.joined(separator: "\n"))
-                    subadditionalInfo = []
-                }
             }
 
             if let mutualBooks = person.details.mutualBooks {
-                var mutualBooksString = ""
-                for i in 0..<min(mutualBooks.count, 3) {
-                    if mutualBooksString.isEmpty {
-                        mutualBooksString.append(mutualBooks[i].name)
-                    } else {
-                        mutualBooksString.append(", \(mutualBooks[i].name)")
-                    }
-                }
+                let mutualBooksString = mutualBooks.array(withFirst: 3).map { $0.name }.joined(separator: ", ")
                 subadditionalInfo.append("Books: \(mutualBooksString)")
-                if subadditionalInfo.count == 3 {
-                    additionalInfo.append(subadditionalInfo.joined(separator: "\n"))
-                    subadditionalInfo = []
-                }
             }
 
             if let mutualMusic = person.details.mutualMusic {
-                var mutualMusicString = ""
-                for music in mutualMusic.array(withFirst: 3) {
-                    if mutualMusicString.isEmpty {
-                        mutualMusicString.append(music.name)
-                    } else {
-                        mutualMusicString.append(", \(music.name)")
-                    }
-                }
+                let mutualMusicString = mutualMusic.array(withFirst: 3).map { $0.name }.joined(separator: ", ")
                 subadditionalInfo.append("Music: \(mutualMusicString)")
-                if subadditionalInfo.count == 3 {
-                    additionalInfo.append(subadditionalInfo.joined(separator: "\n"))
-                    subadditionalInfo = []
-                }
             }
             
             if let lastSeenDate = person.details.lastSeenDate {
                 let seenLocation = person.details.lastSeenLocation.map { "Near \($0) on " } ?? ""
                 let dateString = lastSeenDate.string(using: "MM/dd/yyyy")
                 subadditionalInfo.append("Last met: \(seenLocation)\(dateString)")
-                if subadditionalInfo.count == 3 {
-                    additionalInfo.append(subadditionalInfo.joined(separator: "\n"))
-                    subadditionalInfo = []
-                }
             }
             
             if let workPlace = person.details.work?.first {
                 subadditionalInfo.append("Works at: \(workPlace.employer.name)")
-                if subadditionalInfo.count == 3 {
-                    additionalInfo.append(subadditionalInfo.joined(separator: "\n"))
-                    subadditionalInfo = []
-                }
             }
             
             if let relationShipStatus = person.details.relationShipStatus {
                 subadditionalInfo.append(relationShipStatus)
-                if subadditionalInfo.count == 3 {
-                    additionalInfo.append(subadditionalInfo.joined(separator: "\n"))
-                    subadditionalInfo = []
-                }
             }
 
-            additionalInfo.append(subadditionalInfo.joined(separator: "\n"))
-            subadditionalInfo = []
+            let additionalInfo = subadditionalInfo.chunks(of: 3)
 
-            let text = AimView.Text(name: name, additionalInfo: additionalInfo)
+            let text = AimView.Text(name: name, additionalInfo: additionalInfo.map { $0.joined(separator: "\n") })
             self?.displayView.text = text
         }
         .onError(in: .main) { [weak self] error in
