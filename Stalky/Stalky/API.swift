@@ -113,9 +113,9 @@ class StalkyAPI: API {
         case identify
     }
     
-    static var shared: StalkyAPI {
+    lazy static var shared: StalkyAPI = {
         return .init(baseURL: "http://165.227.130.27/api")
-    }
+    }()
     
     lazy var auth: Auth = {
         guard let accessToken = AccessToken.current else {
