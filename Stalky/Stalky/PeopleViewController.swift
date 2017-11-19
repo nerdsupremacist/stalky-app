@@ -73,8 +73,7 @@ extension PeopleViewController {
         
         peopleView.layer.setAffineTransform(CGAffineTransform(scaleX: -1, y: -1))
 
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleThreeTaps))
-        gestureRecognizer.numberOfTapsRequired = 3
+        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleThreeTaps))
         peopleView.addGestureRecognizer(gestureRecognizer)
     }
 
