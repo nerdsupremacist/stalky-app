@@ -113,7 +113,7 @@ class StalkyAPI: API {
         case identify
     }
     
-    lazy static var shared: StalkyAPI = {
+    static var shared: StalkyAPI = {
         return .init(baseURL: "http://165.227.130.27/api")
     }()
     
