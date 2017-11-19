@@ -98,14 +98,40 @@ class PersonInFrame {
 
             if let mutualMusic = person.details.mutualMusic {
                 var mutualMusicString = ""
-                for i in 0..<min(mutualMusic.count, 3) {
+                for music in mutualMusic.array(withFirst: 3) {
                     if mutualMusicString.isEmpty {
-                        mutualMusicString.append(mutualMusic[i].name)
+                        mutualMusicString.append(music.name)
                     } else {
-                        mutualMusicString.append(", \(mutualMusic[i].name)")
+                        mutualMusicString.append(", \(music.name)")
                     }
                 }
                 subadditionalInfo.append("Music: \(mutualMusicString)")
+                if subadditionalInfo.count == 3 {
+                    additionalInfo.append(subadditionalInfo.joined(separator: "\n"))
+                    subadditionalInfo = []
+                }
+            }
+            
+            if let lastSeenDate = person.details.lastSeenDate {
+                let seenLocation = person.details.lastSeenLocation.map { "Near \($0) on " } ?? ""
+                let dateString = lastSeenDate.string(using: "MM/dd/yyyy")
+                subadditionalInfo.append("Last met: \(seenLocation)\(dateString)")
+                if subadditionalInfo.count == 3 {
+                    additionalInfo.append(subadditionalInfo.joined(separator: "\n"))
+                    subadditionalInfo = []
+                }
+            }
+            
+            if let workPlace = person.details.work?.first {
+                subadditionalInfo.append("Works at: \(workPlace.employer.name)")
+                if subadditionalInfo.count == 3 {
+                    additionalInfo.append(subadditionalInfo.joined(separator: "\n"))
+                    subadditionalInfo = []
+                }
+            }
+            
+            if let relationShipStatus = person.details.relationShipStatus {
+                subadditionalInfo.append(relationShipStatus)
                 if subadditionalInfo.count == 3 {
                     additionalInfo.append(subadditionalInfo.joined(separator: "\n"))
                     subadditionalInfo = []
