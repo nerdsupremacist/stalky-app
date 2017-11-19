@@ -32,6 +32,12 @@ class AimView: UIView {
             nameLabel.text = nil
 
             let maxLabelSize = CGSize(width: bounds.width, height: .infinity)
+
+            let expectedNameLabelSize = (text.name as NSString).boundingRect(with: maxLabelSize,
+                                                                             options: .usesLineFragmentOrigin,
+                                                                             attributes: [NSAttributedStringKey.font : nameLabel.font],
+                                                                             context: nil)
+
             let expectedLabelSizes = text.additionalInfo.map {
                 ($0 as NSString).boundingRect(with: maxLabelSize,
                                               options: .usesLineFragmentOrigin,
@@ -46,8 +52,8 @@ class AimView: UIView {
                 $0.height < $1.height
             }!
 
-            blurViewWidthConstraint.constant = widestLabel.width + 30
-            blurViewHeightConstraint.constant = highestLabel.height + 30
+            blurViewWidthConstraint.constant = max(expectedNameLabelSize.width, widestLabel.width) + 30
+            blurViewHeightConstraint.constant = expectedNameLabelSize.height + highestLabel.height + 30
 
             isAnimatingText = true
             nameLabel.animate(text: text.name, delay: 0.1, mainColor: .white, intermediateColor: .clear) {
