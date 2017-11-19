@@ -67,6 +67,30 @@ class PersonInFrame {
                 additionalInfo.append("Events: \(mutualEventsString)\n")
             }
 
+            if let mutualBooks = person.details.mutual_books {
+                var mutualBooksString = ""
+                for i in 0..<min(mutualBooks.count, 3) {
+                    if mutualBooksString.isEmpty {
+                        mutualBooksString.append(mutualBooks[i].name)
+                    } else {
+                        mutualBooksString.append(", \(mutualBooks[i].name)")
+                    }
+                }
+                additionalInfo.append("Books: \(mutualBooksString)\n")
+            }
+
+            if let mutualMusic = person.details.mutual_music {
+                var mutualMusicString = ""
+                for i in 0..<min(mutualMusic.count, 3) {
+                    if mutualMusicString.isEmpty {
+                        mutualMusicString.append(mutualMusic[i].name)
+                    } else {
+                        mutualMusicString.append(", \(mutualMusic[i].name)")
+                    }
+                }
+                additionalInfo.append("Music: \(mutualMusicString)\n")
+            }
+
 
             let text = AimView.Text(name: name, additionalInfo: additionalInfo)
             self?.displayView.text = text
