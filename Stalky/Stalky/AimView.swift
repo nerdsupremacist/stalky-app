@@ -22,6 +22,7 @@ class AimView: UIView {
     }
 
     var additionalInfoCursor = 0
+    var isAnimatingText = false
 
     var text: Text? {
         didSet {
@@ -37,15 +38,24 @@ class AimView: UIView {
                                               attributes: [NSAttributedStringKey.font : infoLabel.font],
                                               context: nil)
             }
-            let expectedLabelSize = expectedLabelSizes.max()!
 
-            blurViewWidthConstraint.constant = expectedLabelSize.width + 30
-            blurViewHeightConstraint.constant = expectedLabelSize.height + 30
+            let widestLabel = expectedLabelSizes.max {
+                $0.width < $1.width
+            }!
+            let highestLabel = expectedLabelSizes.max {
+                $0.height < $1.height
+            }!
 
+            blurViewWidthConstraint.constant = widestLabel.width + 30
+            blurViewHeightConstraint.constant = highestLabel.height + 30
+
+            isAnimatingText = true
             nameLabel.animate(text: text.name, delay: 0.1, mainColor: .white, intermediateColor: .clear) {
                 guard let firstText = text.additionalInfo.first else { return }
+                self.infoLabel.animate(text: firstText, delay: 0.1, mainColor: .white, intermediateColor: .clear) {
+                    self.isAnimatingText = false
+                }
                 self.additionalInfoCursor += 1
-                self.infoLabel.animate(text: firstText, delay: 0.1, mainColor: .white, intermediateColor: .clear)
             }
         }
     }
@@ -96,7 +106,6 @@ class AimView: UIView {
         let visualEffectView = UIVisualEffectView(effect: blurEffect)
         visualEffectView.layer.cornerRadius = 5
         visualEffectView.clipsToBounds = true
-
         visualEffectView.translatesAutoresizingMaskIntoConstraints = false
         blurView.addSubview(visualEffectView)
 
@@ -132,6 +141,43 @@ class AimView: UIView {
         activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
 
+        // Additional info swiping
+        isUserInteractionEnabled = true
+        let swipeUpGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeUp))
+        swipeUpGestureRecognizer.direction = .up
+        addGestureRecognizer(swipeUpGestureRecognizer)
+        let swipeDownGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeDown))
+        swipeDownGestureRecognizer.direction = .down
+        addGestureRecognizer(swipeDownGestureRecognizer)
+
+    }
+
+    @objc
+    private func handleSwipeUp() {
+        guard !isAnimatingText else { return }
+
+        guard additionalInfoCursor < text?.additionalInfo.count ?? 0, let nextText = text?.additionalInfo[additionalInfoCursor] else { return }
+
+        isAnimatingText = true
+        infoLabel.text = nil
+        infoLabel.animate(text: nextText, delay: 0.1, mainColor: .white, intermediateColor: .clear) {
+            self.isAnimatingText = false
+        }
+        additionalInfoCursor += 1
+    }
+
+    @objc
+    private func handleSwipeDown() {
+        guard !isAnimatingText else { return }
+
+        guard additionalInfoCursor >= 0, let previousText = text?.additionalInfo[additionalInfoCursor] else { return }
+
+        isAnimatingText = true
+        infoLabel.text = nil
+        infoLabel.animate(text: previousText, delay: 0.1, mainColor: .white, intermediateColor: .clear) {
+            self.isAnimatingText = false
+        }
+        additionalInfoCursor -= 1
     }
 
     private func updateActivityIndicatorColor() {
@@ -247,18 +293,5 @@ extension AimView.Color {
         case .white:
             return .white
         }
-    }
-}
-
-extension CGRect: Comparable {
-    static func ==(lhs: CGRect, rhs: CGRect) -> Bool {
-        return lhs.width == rhs.width
-            && lhs.height == rhs.height
-            && lhs.origin.x == rhs.origin.x
-            && lhs.origin.y == rhs.origin.y
-    }
-
-    public static func <(lhs: CGRect, rhs: CGRect) -> Bool {
-        return lhs.height < rhs.height
     }
 }
