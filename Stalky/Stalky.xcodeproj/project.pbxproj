@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E5E87251FC12B8C00A3B57D /* Geolocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5E87241FC12B8C00A3B57D /* Geolocation.swift */; };
 		0EB58FD71FBF71CD0095D16F /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB58FD61FBF71CD0095D16F /* Person.swift */; };
 		0EB58FD91FBF72170095D16F /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB58FD81FBF72170095D16F /* PeopleViewController.swift */; };
 		0EB58FDD1FBF73FD0095D16F /* PeopleDetectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB58FDC1FBF73FD0095D16F /* PeopleDetectionManager.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E5E87241FC12B8C00A3B57D /* Geolocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geolocation.swift; sourceTree = "<group>"; };
 		0EB58FD61FBF71CD0095D16F /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		0EB58FD81FBF72170095D16F /* PeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
 		0EB58FDC1FBF73FD0095D16F /* PeopleDetectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleDetectionManager.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				0EB58FDC1FBF73FD0095D16F /* PeopleDetectionManager.swift */,
 				0EB58FD61FBF71CD0095D16F /* Person.swift */,
 				0EB590901FBFD50C0095D16F /* API.swift */,
+				0E5E87241FC12B8C00A3B57D /* Geolocation.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 				0EB58FD71FBF71CD0095D16F /* Person.swift in Sources */,
 				0EB58FD91FBF72170095D16F /* PeopleViewController.swift in Sources */,
 				C593CFD11FBFAF86003DDF86 /* AimView.swift in Sources */,
+				0E5E87251FC12B8C00A3B57D /* Geolocation.swift in Sources */,
 				0EB5908D1FBF969E0095D16F /* PersonInFrame.swift in Sources */,
 				0EB58FDD1FBF73FD0095D16F /* PeopleDetectionManager.swift in Sources */,
 				0EB590911FBFD50C0095D16F /* API.swift in Sources */,

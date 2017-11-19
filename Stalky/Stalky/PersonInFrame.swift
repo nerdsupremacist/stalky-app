@@ -64,7 +64,7 @@ class PersonInFrame {
                 }
             }
 
-            if let mutualEvents = person.details.mutual_events {
+            if let mutualEvents = person.details.mutualEvents {
                 var mutualEventsString = ""
                 for i in 0..<min(mutualEvents.count, 3) {
                     if mutualEventsString.isEmpty {
@@ -80,7 +80,7 @@ class PersonInFrame {
                 }
             }
 
-            if let mutualBooks = person.details.mutual_books {
+            if let mutualBooks = person.details.mutualBooks {
                 var mutualBooksString = ""
                 for i in 0..<min(mutualBooks.count, 3) {
                     if mutualBooksString.isEmpty {
@@ -96,7 +96,7 @@ class PersonInFrame {
                 }
             }
 
-            if let mutualMusic = person.details.mutual_music {
+            if let mutualMusic = person.details.mutualMusic {
                 var mutualMusicString = ""
                 for i in 0..<min(mutualMusic.count, 3) {
                     if mutualMusicString.isEmpty {
