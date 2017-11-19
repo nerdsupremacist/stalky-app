@@ -153,14 +153,12 @@ class AimView: UIView {
 
         // Additional info swiping
         isUserInteractionEnabled = true
-        let swipeUpGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeUp))
-        swipeUpGestureRecognizer.direction = .up
-        addGestureRecognizer(swipeUpGestureRecognizer)
-
+        let tapUpGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        addGestureRecognizer(tapUpGestureRecognizer)
     }
 
     @objc
-    private func handleSwipeUp() {
+    private func handleTap() {
         guard !isAnimatingText else { return }
 
         guard additionalInfoCursor < text?.additionalInfo.count ?? 0, let nextText = text?.additionalInfo[additionalInfoCursor] else { return }
