@@ -10,10 +10,45 @@ import UIKit
 
 class AimView: UIView {
 
+    private let nameLabel = UILabel()
     private let infoLabel = UILabel()
     private let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
     private var blurViewWidthConstraint: NSLayoutConstraint!
     private var blurViewHeightConstraint: NSLayoutConstraint!
+
+    struct Text {
+        let name: String
+        let additionalInfo: [String]
+    }
+
+    var additionalInfoCursor = 0
+
+    var text: Text? {
+        didSet {
+            guard let text = text else { return }
+
+            infoLabel.text = nil
+            nameLabel.text = nil
+
+            let maxLabelSize = CGSize(width: bounds.width, height: .infinity)
+            let expectedLabelSizes = text.additionalInfo.map {
+                ($0 as NSString).boundingRect(with: maxLabelSize,
+                                              options: .usesLineFragmentOrigin,
+                                              attributes: [NSAttributedStringKey.font : infoLabel.font],
+                                              context: nil)
+            }
+            let expectedLabelSize = expectedLabelSizes.max()!
+
+            blurViewWidthConstraint.constant = expectedLabelSize.width + 30
+            blurViewHeightConstraint.constant = expectedLabelSize.height + 30
+
+            nameLabel.animate(text: text.name, delay: 0.1, mainColor: .white, intermediateColor: .clear) {
+                guard let firstText = text.additionalInfo.first else { return }
+                self.additionalInfoCursor += 1
+                self.infoLabel.animate(text: firstText, delay: 0.1, mainColor: .white, intermediateColor: .clear)
+            }
+        }
+    }
 
     enum Color {
         case red
@@ -41,8 +76,10 @@ class AimView: UIView {
     }
 
     private func setup() {
-        // Blurred background
 
+        clipsToBounds = false
+
+        // Blurred background
         let blurView = UIView()
         blurView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(blurView)
@@ -68,20 +105,26 @@ class AimView: UIView {
         visualEffectView.topAnchor.constraint(equalTo: blurView.topAnchor).isActive = true
         visualEffectView.bottomAnchor.constraint(equalTo: blurView.bottomAnchor).isActive = true
 
-        // Label
+        // Name label
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.textColor = .white
+        nameLabel.font = UIFont(name: "CourierNewPS-BoldMT", size: 12)
+        addSubview(nameLabel)
+        nameLabel.leadingAnchor.constraint(equalTo: blurView.leadingAnchor, constant: 10).isActive = true
+        nameLabel.trailingAnchor.constraint(equalTo: blurView.trailingAnchor, constant: -10).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: blurView.topAnchor, constant: 10).isActive = true
 
+        // Additional info label
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
         infoLabel.textColor = .white
-        infoLabel.font = UIFont(name: "CourierNewPS-BoldMT", size: 12)
+        infoLabel.font = UIFont(name: "CourierNewPSMT", size: 12)
         infoLabel.numberOfLines = 0
         addSubview(infoLabel)
-        clipsToBounds = false
         infoLabel.leadingAnchor.constraint(equalTo: blurView.leadingAnchor, constant: 10).isActive = true
         infoLabel.trailingAnchor.constraint(equalTo: blurView.trailingAnchor, constant: -10).isActive = true
-        infoLabel.topAnchor.constraint(equalTo: blurView.topAnchor, constant: 10).isActive = true
+        infoLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10).isActive = true
 
         // Activity indicator
-
         updateActivityIndicatorColor()
         activityIndicator.alpha = 0.5
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -91,23 +134,8 @@ class AimView: UIView {
 
     }
 
-
     private func updateActivityIndicatorColor() {
         activityIndicator.color = color.uiColor
-    }
-
-    func animate(text: String) {
-        infoLabel.text = nil
-
-        let maxLabelSize = CGSize(width: bounds.width, height: .infinity)
-        let expectedLabelSize = (text as NSString).boundingRect(with: maxLabelSize,
-                                                                options: .usesLineFragmentOrigin,
-                                                                attributes: [NSAttributedStringKey.font : infoLabel.font],
-                                                                context: nil)
-        blurViewWidthConstraint.constant = expectedLabelSize.width + 30
-        blurViewHeightConstraint.constant = expectedLabelSize.height + 30
-
-        infoLabel.animate(text: text, delay: 0.1, mainColor: .white, intermediateColor: .clear)
     }
 
     override func draw(_ rect: CGRect) {
@@ -219,5 +247,18 @@ extension AimView.Color {
         case .white:
             return .white
         }
+    }
+}
+
+extension CGRect: Comparable {
+    static func ==(lhs: CGRect, rhs: CGRect) -> Bool {
+        return lhs.width == rhs.width
+            && lhs.height == rhs.height
+            && lhs.origin.x == rhs.origin.x
+            && lhs.origin.y == rhs.origin.y
+    }
+
+    public static func <(lhs: CGRect, rhs: CGRect) -> Bool {
+        return lhs.height < rhs.height
     }
 }

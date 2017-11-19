@@ -42,41 +42,34 @@ class PersonInFrame {
             
             self?.displayView.color = .green
             self?.displayView.stopProgress()
-            
-            var text = "Name: \(person.name)\n"
-            
-            if let birthday = person.details.birthday?.string(using: "dd.MM.YYYY") {
-                text.append("\n")
-                text.append("Birthday: \(birthday)")
+
+            let name = "Name: \(person.name)\n"
+
+            var additionalInfo: [String] = []
+
+            if let birthday = person.details.birthday {
+                additionalInfo.append("Birthday: \(birthday)\n")
             }
-            
-//            if let dateOfFirstEncounter = person.dateOfFirstEncounter {
-//                text.append("\n")
-//                text.append("Met on: \(dateOfFirstEncounter)")
-//
-//            }
-//            if let likes = person.likes {
-//                text.append("\n")
-//                text.append("Likes: \(likes.joined(separator: ", "))")
-//            }
-//            if let address = person.address {
-//                text.append("\n")
-//                text.append("Address: \(address)")
-//
-//            }
             
             if let education = person.details.education?.last?.school.name {
-                text.append("\n")
-                text.append("Education: \(education)")
-                
+                additionalInfo.append("Education: \(education)\n")
             }
-//            if let employer = person.employer {
-//                text.append("\n")
-//                text.append("Employer: \(employer)")
-//
-//            }
-            
-            self?.displayView.animate(text: text)
+
+            if let mutualEvents = person.details.mutual_events {
+                var mutualEventsString = ""
+                for i in 0..<min(mutualEvents.count, 3) {
+                    if mutualEventsString.isEmpty {
+                        mutualEventsString.append(mutualEvents[i].name)
+                    } else {
+                        mutualEventsString.append(", \(mutualEvents[i].name)")
+                    }
+                }
+                additionalInfo.append("Events: \(mutualEventsString)\n")
+            }
+
+
+            let text = AimView.Text(name: name, additionalInfo: additionalInfo)
+            self?.displayView.text = text
         }
         .onError(in: .main) { [weak self] error in
             
