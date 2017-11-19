@@ -47,12 +47,27 @@ class PersonInFrame {
 
             var subadditionalInfo: [String] = []
 
-            if let birthday = person.details.birthday {
-                subadditionalInfo.append("Birthday: \(birthday)")
+            if let relationShipStatus = person.details.relationShipStatus {
+                subadditionalInfo.append(relationShipStatus)
             }
-            
+
             if let education = person.details.education?.last?.school.name {
                 subadditionalInfo.append("Education: \(education)")
+            }
+
+            if let mutualMusic = person.details.mutualMusic {
+                let mutualMusicString = mutualMusic.array(withFirst: 3).map { $0.name }.joined(separator: ", ")
+                subadditionalInfo.append("Music: \(mutualMusicString)")
+            }
+
+            if let lastSeenDate = person.details.lastSeenDate {
+                let seenLocation = person.details.lastSeenLocation.map { "Near \($0) on " } ?? ""
+                let dateString = lastSeenDate.string(using: "MM/dd/yyyy")
+                subadditionalInfo.append("Last met: \(seenLocation)\(dateString)")
+            }
+
+            if let birthday = person.details.birthday {
+                subadditionalInfo.append("Birthday: \(birthday)")
             }
 
             if let mutualEvents = person.details.mutualEvents {
@@ -64,27 +79,11 @@ class PersonInFrame {
                 let mutualBooksString = mutualBooks.array(withFirst: 3).map { $0.name }.joined(separator: ", ")
                 subadditionalInfo.append("Books: \(mutualBooksString)")
             }
-
-            if let mutualMusic = person.details.mutualMusic {
-                let mutualMusicString = mutualMusic.array(withFirst: 3).map { $0.name }.joined(separator: ", ")
-                subadditionalInfo.append("Music: \(mutualMusicString)")
-            }
-            
-            if let lastSeenDate = person.details.lastSeenDate {
-                let seenLocation = person.details.lastSeenLocation.map { "Near \($0) on " } ?? ""
-                let dateString = lastSeenDate.string(using: "MM/dd/yyyy")
-                subadditionalInfo.append("Last met: \(seenLocation)\(dateString)")
-            }
-            
             if let workPlace = person.details.work?.first {
                 subadditionalInfo.append("Works at: \(workPlace.employer.name)")
             }
-            
-            if let relationShipStatus = person.details.relationShipStatus {
-                subadditionalInfo.append(relationShipStatus)
-            }
 
-            let additionalInfo = subadditionalInfo.chunks(of: 3)
+            let additionalInfo = subadditionalInfo.chunks(of: 4)
 
             let text = AimView.Text(name: name, additionalInfo: additionalInfo.map { $0.joined(separator: "\n") })
             self?.displayView.text = text
