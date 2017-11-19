@@ -46,13 +46,22 @@ class PersonInFrame {
             let name = "Name: \(person.name)\n"
 
             var additionalInfo: [String] = []
+            var subadditionalInfo: [String] = []
 
             if let birthday = person.details.birthday {
-                additionalInfo.append("Birthday: \(birthday)\n")
+                subadditionalInfo.append("Birthday: \(birthday)")
+                if subadditionalInfo.count == 3 {
+                    additionalInfo.append(subadditionalInfo.joined(separator: "\n"))
+                    subadditionalInfo = []
+                }
             }
             
             if let education = person.details.education?.last?.school.name {
-                additionalInfo.append("Education: \(education)\n")
+                subadditionalInfo.append("Education: \(education)")
+                if subadditionalInfo.count == 3 {
+                    additionalInfo.append(subadditionalInfo.joined(separator: "\n"))
+                    subadditionalInfo = []
+                }
             }
 
             if let mutualEvents = person.details.mutual_events {
@@ -64,7 +73,11 @@ class PersonInFrame {
                         mutualEventsString.append(", \(mutualEvents[i].name)")
                     }
                 }
-                additionalInfo.append("Events: \(mutualEventsString)\n")
+                subadditionalInfo.append("Events: \(mutualEventsString)")
+                if subadditionalInfo.count == 3 {
+                    additionalInfo.append(subadditionalInfo.joined(separator: "\n"))
+                    subadditionalInfo = []
+                }
             }
 
             if let mutualBooks = person.details.mutual_books {
@@ -76,7 +89,11 @@ class PersonInFrame {
                         mutualBooksString.append(", \(mutualBooks[i].name)")
                     }
                 }
-                additionalInfo.append("Books: \(mutualBooksString)\n")
+                subadditionalInfo.append("Books: \(mutualBooksString)")
+                if subadditionalInfo.count == 3 {
+                    additionalInfo.append(subadditionalInfo.joined(separator: "\n"))
+                    subadditionalInfo = []
+                }
             }
 
             if let mutualMusic = person.details.mutual_music {
@@ -88,9 +105,15 @@ class PersonInFrame {
                         mutualMusicString.append(", \(mutualMusic[i].name)")
                     }
                 }
-                additionalInfo.append("Music: \(mutualMusicString)\n")
+                subadditionalInfo.append("Music: \(mutualMusicString)")
+                if subadditionalInfo.count == 3 {
+                    additionalInfo.append(subadditionalInfo.joined(separator: "\n"))
+                    subadditionalInfo = []
+                }
             }
 
+            additionalInfo.append(subadditionalInfo.joined(separator: "\n"))
+            subadditionalInfo = []
 
             let text = AimView.Text(name: name, additionalInfo: additionalInfo)
             self?.displayView.text = text
