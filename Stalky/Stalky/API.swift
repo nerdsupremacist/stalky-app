@@ -72,7 +72,6 @@ class FacebookAuth {
                 switch result {
                     
                 case .success(let response):
-                    print(response)
                     if let id = response.dictionaryValue?["id"] as? String {
                         setter.success(with: id)
                     } else {
@@ -131,12 +130,6 @@ class StalkyAPI: API {
         self.baseURL = baseURL
     }
     
-    var baseQueries: [String : String] {
-        guard let userId = AccessToken.current?.userId else {
-            return .empty
-        }
-        return ["id" : userId]
-    }
 }
 
 extension StalkyAPI {
