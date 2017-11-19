@@ -36,9 +36,21 @@ struct Person: Codable {
             let name: String
         }
         
-        let birthday: Date?
+        struct MutualBookEntry: Codable {
+            let id: String
+            let name: String
+        }
+        
+        struct MutualMusicEntry: Codable {
+            let id: String
+            let name: String
+        }
+        
+        let birthday: String?
         let education: [EducationEntry]?
         let mutual_events: [MutualEventEntry]?
+        let mutual_books: [MutualBookEntry]?
+        let mutual_music: [MutualMusicEntry]?
     }
     
     enum CodingKeys: String, CodingKey {
