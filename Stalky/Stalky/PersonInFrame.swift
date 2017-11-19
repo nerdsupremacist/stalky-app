@@ -55,7 +55,7 @@ class PersonInFrame {
                 subadditionalInfo.append("Education: \(education)")
             }
 
-            if let mutualMusic = person.details.mutualMusic {
+            if let mutualMusic = person.details.mutualMusic, !mutualMusic.isEmpty {
                 let mutualMusicString = mutualMusic.array(withFirst: 3).map { $0.name }.joined(separator: ", ")
                 subadditionalInfo.append("Music: \(mutualMusicString)")
             }
@@ -70,12 +70,12 @@ class PersonInFrame {
                 subadditionalInfo.append("Birthday: \(birthday)")
             }
 
-            if let mutualEvents = person.details.mutualEvents {
+            if let mutualEvents = person.details.mutualEvents, !mutualEvents.isEmpty {
                 let mutualEventsString = mutualEvents.array(withFirst: 3).map { $0.name }.joined(separator: ", ")
                 subadditionalInfo.append("Events: \(mutualEventsString)")
             }
 
-            if let mutualBooks = person.details.mutualBooks {
+            if let mutualBooks = person.details.mutualBooks, !mutualBooks.isEmpty {
                 let mutualBooksString = mutualBooks.array(withFirst: 3).map { $0.name }.joined(separator: ", ")
                 subadditionalInfo.append("Books: \(mutualBooksString)")
             }
