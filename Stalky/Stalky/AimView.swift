@@ -141,14 +141,21 @@ class AimView: UIView {
         activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
 
+        // Tap view
+        let tapView = UIView()
+        tapView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(tapView)
+        tapView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        tapView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        tapView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        tapView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        tapView.isHidden = true
+
         // Additional info swiping
         isUserInteractionEnabled = true
         let swipeUpGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeUp))
         swipeUpGestureRecognizer.direction = .up
         addGestureRecognizer(swipeUpGestureRecognizer)
-        let swipeDownGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeDown))
-        swipeDownGestureRecognizer.direction = .down
-        addGestureRecognizer(swipeDownGestureRecognizer)
 
     }
 
@@ -164,20 +171,6 @@ class AimView: UIView {
             self.isAnimatingText = false
         }
         additionalInfoCursor += 1
-    }
-
-    @objc
-    private func handleSwipeDown() {
-        guard !isAnimatingText else { return }
-
-        guard additionalInfoCursor >= 0, let previousText = text?.additionalInfo[additionalInfoCursor] else { return }
-
-        isAnimatingText = true
-        infoLabel.text = nil
-        infoLabel.animate(text: previousText, delay: 0.1, mainColor: .white, intermediateColor: .clear) {
-            self.isAnimatingText = false
-        }
-        additionalInfoCursor -= 1
     }
 
     private func updateActivityIndicatorColor() {
