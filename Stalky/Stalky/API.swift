@@ -69,8 +69,8 @@ class FacebookAuth {
         return .new { setter in
             let connection = GraphRequestConnection()
             connection.add(GraphRequest(graphPath: "/me")) { httpResponse, result in
+                print(result)
                 switch result {
-                    
                 case .success(let response):
                     if let id = response.dictionaryValue?["id"] as? String {
                         setter.success(with: id)
