@@ -30,3 +30,13 @@ The next big step towards turning **Stalky** into a production app is deploying 
 
 ## Demo videos
 https://www.youtube.com/watch?v=qS84dwYz32U
+
+## Contributors
+
+This was built by these sexy people:
+
+[Niko Tzioras](https://github.com/greece57)
+[Adnan Makhani](https://github.com/makhaniadnan)
+[Jana Pejić](https://github.com/janapejic)
+[Me](https://github.com/mathiasquintero)
+
