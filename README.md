@@ -35,8 +35,7 @@ https://www.youtube.com/watch?v=qS84dwYz32U
 
 This was built by these sexy people:
 
-[Niko Tzioras](https://github.com/greece57)
-[Adnan Makhani](https://github.com/makhaniadnan)
-[Jana Pejić](https://github.com/janapejic)
-[Me](https://github.com/mathiasquintero)
-
+- [Niko Tzioras](https://github.com/greece57)
+- [Adnan Makhani](https://github.com/makhaniadnan)
+- [Jana Pejić](https://github.com/janapejic)
+- [Me](https://github.com/mathiasquintero)
