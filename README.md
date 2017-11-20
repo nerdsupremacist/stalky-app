@@ -1,9 +1,17 @@
+![Logo](https://github.com/mathiasquintero/stalky-app/blob/master/Icon.png)
+
 # Stalky (App)
 ## Inspiration
 It is estimated that an average person interacts with around 80.000 people during their lifetime (source: https://blog.adioma.com/counting-the-people-you-impact-infographic/) Even if you wanted to, there is no way for you to remember all of their names, let alone where you met them or what you learned about them during your encounter. The situation gets even trickier when you forget a name of someone you meet often, like a work colleague. **Stalky** can help with this!
 
 ## What it does
 **Stalky** is an AR-enhanced contact book. It scans the person's face, performs face recognition using Microsoft Azure and based on it fetches different data about them using the Facebook API. It displays them on the phone in real time so that you never find yourself in the awkward situation of not recognising someone you already met.
+
+### Ok? And how creepy is it?
+
+Look for yourself:
+
+![Screenshot](https://github.com/mathiasquintero/stalky-app/blob/master/gallery.jpg)
 
 ## How we built it
 **Stalky** is an iOS app running on iOS 11 and utilising the power of Apple's new Vision Framework to extract faces from the camera feed. The faces are then sent to **Microsoft Azure** for processing and fetching additional information. Azure face recognition is trained using data from Facebook. Whenever a user logs in to Facebook using **Stalky**, our server fetches the list of all the user's friends who also use **Stalky**. These friends constitute the so called person group for that user. After that we fetch all the images for all the people in the person group, we extract exactly their faces based on Facebook tags and then we train Azure using those faces. Once training is done, the user can point their phone at any of the people in their person group and Azure will report who that is, providing different additional information. 
