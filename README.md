@@ -16,6 +16,8 @@ Look for yourself:
 ## How we built it
 **Stalky** is an iOS app running on iOS 11 and utilising the power of Apple's new Vision Framework to extract faces from the camera feed. The faces are then sent to **Microsoft Azure** for processing and fetching additional information. Azure face recognition is trained using data from Facebook. Whenever a user logs in to Facebook using **Stalky**, our server fetches the list of all the user's friends who also use **Stalky**. These friends constitute the so called person group for that user. After that we fetch all the images for all the people in the person group, we extract exactly their faces based on Facebook tags and then we train Azure using those faces. Once training is done, the user can point their phone at any of the people in their person group and Azure will report who that is, providing different additional information. 
 
+Backend code [here](https://github.com/greece57/stalky_backend).
+
 ## Challenges we ran into
 We decided to use Facebook API as it is mostly a to-go Social Media Platform. However it turned out that getting access to required data is restricted and it will only be able to recognise the people who use the Stalky app. 
 
