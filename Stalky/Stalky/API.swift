@@ -136,9 +136,13 @@ extension StalkyAPI {
     
     @discardableResult
     func registerUser() -> Response<JSON> {
+        
         guard let accessToken = AccessToken.current else {
             return .errored(with: .cannotPerformRequest)
         }
+        
+        auth = FacebookAuth(accessToken: accessToken)
+        
         let body: JSON = [
             "id": accessToken.userId,
         ]

@@ -127,22 +127,20 @@ extension Person {
             return MultiformData(parameters: [:], boundary: UUID().uuidString, files: [file])
         }.flatMap { (body: MultiformData) in
                 
-            var queries: [String : CustomStringConvertible] = [
+            let queries: [String : CustomStringConvertible] = [
                 "x": area.origin.x,
                 "y": image.extent.size.width - area.origin.y,
                 "width": area.width,
                 "height": area.height,
-                "date": Date.now.string(using: "MM/dd/yyyy")
-                ]
-            
-            queries["location"] = locationString
+                "date": Date.now.string(using: "MM/dd/yyyy"),
+                "location": locationString ?? ""
+            ]
             
             return api.doRepresentedRequest(with: .post,
                                             to: .identify,
                                             queries: queries,
                                             body: body).flatMap { (data: Data) in
                 
-                print(data.string!)
                 return async {
                     let jsonDecoder = JSONDecoder()
                     let dateFormatter = DateFormatter()
